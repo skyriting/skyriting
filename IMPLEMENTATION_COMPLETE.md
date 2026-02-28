@@ -97,8 +97,8 @@ All emails are sent using Gmail OAuth2 with:
 
 ### Required Environment Variables:
 ```
-GMAIL_USER=team@eco-dispose.com
-GMAIL_CLIENT_ID=your-gmail-client-id.apps.googleusercontent.com
+GMAIL_USER=your-email@gmail.com
+GMAIL_CLIENT_ID=your-gmail-client-id
 GMAIL_CLIENT_SECRET=your-gmail-client-secret
 GMAIL_REFRESH_TOKEN=your-gmail-refresh-token
 ```

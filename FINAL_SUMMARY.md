@@ -61,7 +61,7 @@ git push -u origin main
 
 **When prompted:**
 - Username: `skyriting`
-- Password: `your-github-token-here`
+- Password: Use your GitHub personal access token
 
 ### Step 2: Deploy to Railway
 

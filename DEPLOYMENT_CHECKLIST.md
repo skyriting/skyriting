@@ -61,7 +61,7 @@ git branch -M main
 git push -u origin main
 ```
 
-**GitHub Token:** `your-github-token-here`
+**GitHub Token:** Use your personal access token (store securely, don't commit)
 
 ### Step 2: Deploy to Railway
 
