@@ -39,8 +39,27 @@ const __dirname = path.dirname(__filename);
 const frontendUrl = process.env.FRONTEND_URL?.replace(/['"]/g, '') || '*'; // Remove quotes if present
 console.log('🌐 CORS Origin:', frontendUrl);
 
+// CORS configuration - allow both custom domain and Railway domain
+const allowedOrigins = [
+  frontendUrl,
+  'https://skyriting.com',
+  'http://skyriting.com',
+  'https://www.skyriting.com',
+  'http://www.skyriting.com',
+  process.env.RAILWAY_PUBLIC_DOMAIN,
+].filter(Boolean);
+
 app.use(cors({
-  origin: frontendUrl,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
+      callback(null, true);
+    } else {
+      callback(null, true); // Allow all for now, can restrict later
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
