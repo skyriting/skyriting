@@ -10,7 +10,7 @@ export default defineConfig({
     exclude: ['lucide-react'],
   },
   build: {
-    outDir: path.resolve(__dirname, '../dist'), // Output to root dist folder
+    outDir: path.resolve(__dirname, 'dist'), // Output to project/dist folder (same level as src)
     emptyOutDir: true,
     assetsDir: 'assets',
     sourcemap: false,

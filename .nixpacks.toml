@@ -9,7 +9,8 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "cd project && npm run build"
+  "cd project && npm install && npm run build",
+  "ls -la project/dist || echo 'Build output check'"
 ]
 
 [start]
