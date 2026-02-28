@@ -1,0 +1,32 @@
+{
+  "name": "skyriting",
+  "version": "1.0.0",
+  "description": "Skyriting - Premium Private Aviation Platform",
+  "private": true,
+  "scripts": {
+    "install:all": "cd project && npm install && cd backend && npm install",
+    "build": "cd project && npm run build",
+    "build:backend": "cd project/backend && npm install",
+    "build:all": "npm run install:all && npm run build",
+    "start": "cd project/backend && npm start",
+    "dev": "cd project && npm run dev",
+    "dev:backend": "cd project/backend && npm run dev",
+    "init-admin": "cd project/backend && npm run init-admin"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skyriting/skyriting.git"
+  },
+  "keywords": [
+    "private-jet",
+    "aviation",
+    "charter",
+    "skyriting"
+  ],
+  "author": "Skyriting",
+  "license": "ISC"
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <title>Skyriting - India's Premier Private Aviation Platform</title>
+    <meta name="description" content="Book luxury private jets, helicopters, and specialized aviation services with Skyriting. Exclusive memberships, empty leg deals, and premium fleet access." />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#ce3631" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Skyriting" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/logo.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Skyriting - Private Aviation Platform" />
+    <meta property="og:description" content="India's premier private aviation platform for luxury charter services" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/logo.svg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Skyriting - Private Aviation" />
+    <meta name="twitter:description" content="Book luxury private jets and helicopters with India's premier aviation platform" />
+    <meta name="twitter:image" content="/logo.svg" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.log('Service Worker registration failed'));
+        });
+      }
+    </script>
+  </body>
+</html>
