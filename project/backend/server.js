@@ -36,28 +36,42 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
+const frontendUrl = process.env.FRONTEND_URL?.replace(/['"]/g, '') || '*'; // Remove quotes if present
+console.log('🌐 CORS Origin:', frontendUrl);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: frontendUrl,
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://info_db_user:qZIB1wRGhxp9UMdg@cluster0.n2h0xpe.mongodb.net/skyritingdb?appName=Cluster0';
+let MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://info_db_user:qZIB1wRGhxp9UMdg@cluster0.n2h0xpe.mongodb.net/skyritingdb?appName=Cluster0';
+// Remove quotes if present in environment variable
+MONGODB_URI = MONGODB_URI.replace(/['"]/g, '');
+
+console.log('🔌 Connecting to MongoDB...');
+console.log('📊 Database URI:', MONGODB_URI.replace(/:[^:@]+@/, ':****@')); // Hide password in logs
 
 mongoose.connect(MONGODB_URI, {
-  serverSelectionTimeoutMS: 5000,
+  serverSelectionTimeoutMS: 10000,
   socketTimeoutMS: 45000,
+  retryWrites: true,
+  w: 'majority',
 })
   .then(() => {
     console.log('✅ MongoDB connected successfully');
+    console.log('📊 Database:', mongoose.connection.db.databaseName);
   })
   .catch((error) => {
     console.error('❌ MongoDB connection error:', error.message);
-    // Don't exit in development, allow retry
+    console.error('❌ Error details:', error);
+    // Don't exit immediately, allow server to start and retry
     if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
+      console.error('⚠️  Server will continue but MongoDB connection failed');
     }
   });
 
@@ -92,27 +106,59 @@ app.get('/api/health', (req, res) => {
 const frontendBuildPath = path.join(__dirname, '../dist');
 const distExists = fs.existsSync(frontendBuildPath);
 
+console.log('📁 Frontend build path:', frontendBuildPath);
+console.log('📁 Dist folder exists:', distExists);
+console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
+
 if (distExists || process.env.NODE_ENV === 'production') {
   // Serve static files from the frontend build
-  app.use(express.static(frontendBuildPath));
+  app.use(express.static(frontendBuildPath, {
+    maxAge: '1d',
+    etag: true,
+    lastModified: true
+  }));
 
   // Handle React routing - return all non-API requests to React app
-  app.get('*', (req, res) => {
+  app.get('*', (req, res, next) => {
     // Don't serve index.html for API routes
     if (req.path.startsWith('/api')) {
       return res.status(404).json({ error: 'API route not found' });
     }
-    // Don't serve index.html for admin routes (they should be handled by React Router)
-    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+    
+    // Check if index.html exists
+    const indexPath = path.join(frontendBuildPath, 'index.html');
+    if (!fs.existsSync(indexPath)) {
+      console.error('❌ index.html not found at:', indexPath);
+      return res.status(500).json({ 
+        error: 'Frontend build not found',
+        message: 'Please ensure the frontend is built before deployment'
+      });
+    }
+    
+    // Serve index.html for all other routes (React Router will handle routing)
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('❌ Error serving index.html:', err);
+        next(err);
+      }
+    });
   });
+} else {
+  console.warn('⚠️  Frontend build not found. Running in API-only mode.');
 }
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ 
+  console.error('❌ Error:', err.message);
+  console.error('❌ Stack:', err.stack);
+  console.error('❌ Path:', req.path);
+  console.error('❌ Method:', req.method);
+  
+  res.status(err.status || 500).json({ 
     error: 'Something went wrong!',
-    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    message: process.env.NODE_ENV === 'production' ? err.message : err.message,
+    path: req.path,
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 });
 
@@ -144,7 +190,10 @@ server.on('error', (error) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
   console.log(`📡 API available at http://0.0.0.0:${PORT}/api`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL || 'not set'}`);
   if (process.env.NODE_ENV === 'production') {
     console.log(`🌐 Production mode enabled`);
+    console.log(`📁 Serving static files from: ${frontendBuildPath}`);
   }
 });
