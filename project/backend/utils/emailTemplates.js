@@ -1,6 +1,10 @@
 // Email templates with Skyriting branding and her_o.png logo
 
-const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+// Get frontend URL - use production URL if available, otherwise fallback
+const FRONTEND_URL = process.env.FRONTEND_URL || 
+                     (process.env.NODE_ENV === 'production' 
+                       ? (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : 'https://skyriting.com')
+                       : 'http://localhost:5173');
 const LOGO_URL = `${FRONTEND_URL}/images/her_o.png`;
 
 /**
