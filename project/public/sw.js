@@ -14,18 +14,40 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  const url = new URL(request.url);
+  
+  // Skip caching for non-GET requests (POST, PUT, DELETE, PATCH)
+  if (request.method !== 'GET') {
+    event.respondWith(fetch(request));
+    return;
+  }
+  
+  // Skip caching for API requests
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(request));
+    return;
+  }
+  
+  // Skip caching for chrome-extension requests
+  if (url.protocol === 'chrome-extension:') {
+    event.respondWith(fetch(request));
+    return;
+  }
+  
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    caches.match(request).then((response) => {
       if (response) {
         return response;
       }
-      return fetch(event.request).then((response) => {
+      return fetch(request).then((response) => {
+        // Only cache successful GET responses for static assets
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
         const responseToCache = response.clone();
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
+          cache.put(request, responseToCache);
         });
         return response;
       });

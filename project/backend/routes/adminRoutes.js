@@ -379,4 +379,229 @@ router.delete('/articles/:id', async (req, res) => {
   }
 });
 
+// Inquiries Management
+router.get('/inquiries', async (req, res) => {
+  try {
+    const { status, startDate, endDate, search } = req.query;
+    let query = {};
+    
+    if (status) {
+      query.status = status;
+    }
+    
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) query.createdAt.$gte = new Date(startDate);
+      if (endDate) query.createdAt.$lte = new Date(endDate);
+    }
+    
+    if (search) {
+      query.$or = [
+        { customer_name: { $regex: search, $options: 'i' } },
+        { customer_email: { $regex: search, $options: 'i' } },
+        { customer_phone: { $regex: search, $options: 'i' } },
+      ];
+    }
+    
+    const inquiries = await Inquiry.find(query)
+      .sort({ createdAt: -1 })
+      .populate('userId', 'name email')
+      .limit(100);
+    
+    res.json({ inquiries });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/inquiries/:id', async (req, res) => {
+  try {
+    const inquiry = await Inquiry.findById(req.params.id)
+      .populate('userId', 'name email');
+    
+    if (!inquiry) {
+      return res.status(404).json({ error: 'Inquiry not found' });
+    }
+    
+    res.json({ inquiry });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put('/inquiries/:id', async (req, res) => {
+  try {
+    const { status, notes, adminNotes } = req.body;
+    const updateData = {};
+    
+    if (status) updateData.status = status;
+    if (notes !== undefined) updateData.notes = notes;
+    if (adminNotes !== undefined) updateData.adminNotes = adminNotes;
+    
+    const inquiry = await Inquiry.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    ).populate('userId', 'name email');
+    
+    if (!inquiry) {
+      return res.status(404).json({ error: 'Inquiry not found' });
+    }
+    
+    res.json({ inquiry });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Aircraft (Fleet) Management
+router.get('/aircraft', async (req, res) => {
+  try {
+    const aircraft = await Aircraft.find().sort({ createdAt: -1 });
+    res.json({ aircraft });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/aircraft/:id', async (req, res) => {
+  try {
+    const aircraft = await Aircraft.findById(req.params.id);
+    if (!aircraft) {
+      return res.status(404).json({ error: 'Aircraft not found' });
+    }
+    res.json({ aircraft });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/aircraft', async (req, res) => {
+  try {
+    const aircraft = new Aircraft(req.body);
+    await aircraft.save();
+    res.status(201).json({ aircraft });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.put('/aircraft/:id', async (req, res) => {
+  try {
+    const aircraft = await Aircraft.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!aircraft) {
+      return res.status(404).json({ error: 'Aircraft not found' });
+    }
+    res.json({ aircraft });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.delete('/aircraft/:id', async (req, res) => {
+  try {
+    const aircraft = await Aircraft.findByIdAndDelete(req.params.id);
+    if (!aircraft) {
+      return res.status(404).json({ error: 'Aircraft not found' });
+    }
+    res.json({ message: 'Aircraft deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Bookings Management
+router.get('/bookings', async (req, res) => {
+  try {
+    const { status, startDate, endDate, search } = req.query;
+    let query = {};
+    
+    if (status) query.status = status;
+    if (startDate || endDate) {
+      query.createdAt = {};
+      if (startDate) query.createdAt.$gte = new Date(startDate);
+      if (endDate) query.createdAt.$lte = new Date(endDate);
+    }
+    if (search) {
+      query.$or = [
+        { customerName: { $regex: search, $options: 'i' } },
+        { customerEmail: { $regex: search, $options: 'i' } },
+        { customerPhone: { $regex: search, $options: 'i' } },
+      ];
+    }
+    
+    const bookings = await Booking.find(query)
+      .sort({ createdAt: -1 })
+      .populate('userId', 'name email')
+      .populate('aircraftId', 'name tailNumber')
+      .limit(100);
+    
+    res.json({ bookings });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get('/bookings/:id', async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id)
+      .populate('userId', 'name email')
+      .populate('aircraftId', 'name tailNumber');
+    if (!booking) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+    res.json({ booking });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.put('/bookings/:id', async (req, res) => {
+  try {
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    ).populate('userId', 'name email')
+     .populate('aircraftId', 'name tailNumber');
+    if (!booking) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+    res.json({ booking });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Mobility Thread Management
+router.get('/mobility-thread', async (req, res) => {
+  try {
+    const MobilityThreadPost = (await import('../models/MobilityThreadPost.js')).default;
+    const posts = await MobilityThreadPost.find()
+      .sort({ createdAt: -1 })
+      .populate('userId', 'name email')
+      .limit(100);
+    res.json({ posts });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete('/mobility-thread/:id', async (req, res) => {
+  try {
+    const MobilityThreadPost = (await import('../models/MobilityThreadPost.js')).default;
+    const post = await MobilityThreadPost.findByIdAndDelete(req.params.id);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    res.json({ message: 'Post deleted' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;

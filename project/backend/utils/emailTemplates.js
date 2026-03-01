@@ -263,9 +263,23 @@ export async function getQuoteEmailTemplate(quote) {
 }
 
 /**
- * Get booking confirmation template (existing, but with logo)
+ * Get booking confirmation template with full details
  */
 export async function getBookingConfirmationTemplate(booking) {
+  const bookingDate = booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : new Date().toLocaleDateString();
+  const legs = booking.flightDetails?.legs || [];
+  
+  let legsHtml = '';
+  if (legs.length > 0) {
+    legsHtml = legs.map((leg, idx) => `
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">Leg ${idx + 1}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">${leg.origin} → ${leg.destination}</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">${new Date(leg.departureDate).toLocaleDateString()} ${leg.departureTime || ''}</td>
+      </tr>
+    `).join('');
+  }
+  
   return `
     <!DOCTYPE html>
     <html>
@@ -289,8 +303,58 @@ export async function getBookingConfirmationTemplate(booking) {
         </div>
         <div class="content">
           <h2>Your booking has been confirmed!</h2>
-          <p>Booking Number: ${booking.bookingNumber || booking._id}</p>
-          <!-- Add more booking details here -->
+          <p><strong>Booking Number:</strong> ${booking.bookingNumber || booking._id}</p>
+          <p><strong>Booking Date:</strong> ${bookingDate}</p>
+          <p><strong>Status:</strong> ${booking.status || 'Confirmed'}</p>
+          
+          ${booking.aircraftId ? `
+            <h3 style="margin-top: 20px;">Aircraft Details</h3>
+            <p><strong>Aircraft:</strong> ${booking.aircraftId.name || 'N/A'}</p>
+            ${booking.aircraftId.tailNumber ? `<p><strong>Tail Number:</strong> ${booking.aircraftId.tailNumber}</p>` : ''}
+          ` : ''}
+          
+          ${legs.length > 0 ? `
+            <h3 style="margin-top: 20px;">Flight Details</h3>
+            <p><strong>Trip Type:</strong> ${booking.flightDetails?.tripType || 'N/A'}</p>
+            <p><strong>Passengers:</strong> ${booking.flightDetails?.passengerCount || 1}</p>
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+              <thead>
+                <tr style="background: #f0f0f0;">
+                  <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Leg</th>
+                  <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Route</th>
+                  <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Departure</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${legsHtml}
+              </tbody>
+            </table>
+          ` : ''}
+          
+          ${booking.totalAmount ? `
+            <h3 style="margin-top: 20px;">Pricing</h3>
+            <p><strong>Total Amount:</strong> ${booking.currency || 'USD'} ${booking.totalAmount.toLocaleString()}</p>
+            <p><strong>Payment Status:</strong> ${booking.paymentStatus || 'Pending'}</p>
+          ` : ''}
+          
+          ${booking.contactInfo ? `
+            <h3 style="margin-top: 20px;">Contact Information</h3>
+            <p><strong>Name:</strong> ${booking.contactInfo.name}</p>
+            <p><strong>Email:</strong> ${booking.contactInfo.email}</p>
+            <p><strong>Phone:</strong> ${booking.contactInfo.phone}</p>
+          ` : ''}
+          
+          ${booking.specialRequests ? `
+            <h3 style="margin-top: 20px;">Special Requests</h3>
+            <p>${booking.specialRequests}</p>
+          ` : ''}
+          
+          <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+            Thank you for choosing Skyriting. We look forward to serving you!
+          </p>
+          <p style="margin-top: 10px;">
+            If you have any questions, please contact us at <a href="mailto:info@skyriting.com">info@skyriting.com</a>
+          </p>
         </div>
       </div>
     </body>

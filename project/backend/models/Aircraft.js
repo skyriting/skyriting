@@ -20,6 +20,7 @@ const aircraftSchema = new mongoose.Schema({
   // Pricing
   hourly_rate: { type: Number, required: true },
   currency: { type: String, default: 'USD' },
+  commissionPercentage: { type: Number, default: 0, min: 0, max: 100 }, // Commission for this specific aircraft
   
   // Operating Costs (for transparent pricing)
   operatingCosts: {

@@ -2,7 +2,9 @@ import express from 'express';
 import Booking from '../models/Booking.js';
 import Quote from '../models/Quote.js';
 import Inquiry from '../models/Inquiry.js';
+import Aircraft from '../models/Aircraft.js';
 import { authenticateUser, authenticateAdmin } from '../middleware/auth.js';
+import { sendBookingConfirmation } from '../utils/emailService.js';
 
 const router = express.Router();
 
@@ -77,9 +79,20 @@ router.post('/', authenticateUser, async (req, res) => {
 
     await booking.save();
 
+    // Populate aircraft for email
+    await booking.populate('aircraftId', 'name tailNumber');
+
     // Update inquiry status
     inquiry.status = 'converted';
     await inquiry.save();
+
+    // Send booking confirmation email
+    try {
+      await sendBookingConfirmation(booking);
+    } catch (emailError) {
+      console.error('Failed to send booking confirmation email:', emailError);
+      // Don't fail the request if email fails
+    }
 
     res.status(201).json({ booking });
   } catch (error) {

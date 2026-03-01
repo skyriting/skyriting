@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart3, Users, FileText, Plane, Settings, LogOut, TrendingUp } from 'lucide-react';
+import { BarChart3, Users, FileText, Plane, Settings, LogOut, TrendingUp, Calendar, Package, Briefcase, Newspaper, MessageSquare } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 function AdminDashboardContent() {
@@ -125,21 +125,39 @@ function AdminDashboardContent() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/fleet')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Plane className="h-8 w-8 text-blue-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Fleet</h3>
+            <p className="text-sm text-gray-600">Add and manage aircraft</p>
+          </button>
+
           <button
             onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/inquiries')}
             className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
           >
-            <FileText className="h-8 w-8 text-blue-500 mb-3" />
+            <FileText className="h-8 w-8 text-green-500 mb-3" />
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Inquiries</h3>
             <p className="text-sm text-gray-600">View and manage customer inquiries</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/bookings')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Calendar className="h-8 w-8 text-purple-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Bookings</h3>
+            <p className="text-sm text-gray-600">View and manage all bookings</p>
           </button>
 
           <button
             onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/pricing')}
             className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
           >
-            <Settings className="h-8 w-8 text-green-500 mb-3" />
+            <Settings className="h-8 w-8 text-orange-500 mb-3" />
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Pricing Rules</h3>
             <p className="text-sm text-gray-600">Configure pricing and margins</p>
           </button>
@@ -148,9 +166,45 @@ function AdminDashboardContent() {
             onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/routes')}
             className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
           >
-            <BarChart3 className="h-8 w-8 text-purple-500 mb-3" />
+            <BarChart3 className="h-8 w-8 text-indigo-500 mb-3" />
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Routes</h3>
             <p className="text-sm text-gray-600">Configure popular routes</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/packages')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Package className="h-8 w-8 text-pink-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Packages</h3>
+            <p className="text-sm text-gray-600">Manage travel packages</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/services')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Briefcase className="h-8 w-8 text-teal-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Services</h3>
+            <p className="text-sm text-gray-600">Manage services offered</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/articles')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Newspaper className="h-8 w-8 text-cyan-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Articles</h3>
+            <p className="text-sm text-gray-600">Manage news and media</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/mobility')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <MessageSquare className="h-8 w-8 text-yellow-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Mobility Thread</h3>
+            <p className="text-sm text-gray-600">Manage mobility thread posts</p>
           </button>
         </div>
       </main>

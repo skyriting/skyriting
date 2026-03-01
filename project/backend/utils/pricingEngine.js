@@ -123,7 +123,11 @@ export async function calculatePricing(aircraft, legs, pricingRule = null) {
     const subtotalWithHandling = subtotal + groundHandling;
 
     // Apply margin percentage
-    const marginPercentage = pricingRule.marginPercentage || 0;
+    // Priority: Aircraft-specific commission > Aircraft-type margin > Global margin
+    const marginPercentage = aircraft.commissionPercentage || 
+                            pricingRule.marginByAircraftType?.[aircraft.category] || 
+                            pricingRule.marginByAircraftType?.[aircraft.type] || 
+                            pricingRule.marginPercentage || 0;
     const marginAmount = (subtotalWithHandling * marginPercentage) / 100;
     const subtotalWithMargin = subtotalWithHandling + marginAmount;
 
