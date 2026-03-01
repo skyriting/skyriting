@@ -288,11 +288,20 @@ router.post('/admin/login', async (req, res) => {
 
     const admin = await AdminUser.findOne({ email });
     if (!admin) {
+      console.log(`❌ Admin login failed: No admin found with email ${email}`);
+      // Check if any admin exists at all
+      const adminCount = await AdminUser.countDocuments();
+      console.log(`📊 Total admin users in database: ${adminCount}`);
+      if (adminCount === 0) {
+        console.log('⚠️  No admin users found. Admin initialization may have failed.');
+        console.log('💡 Check server startup logs for admin initialization messages.');
+      }
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const isMatch = await admin.comparePassword(password);
     if (!isMatch) {
+      console.log(`❌ Admin login failed: Password mismatch for ${email}`);
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
