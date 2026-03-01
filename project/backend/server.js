@@ -81,9 +81,14 @@ mongoose.connect(MONGODB_URI, {
   retryWrites: true,
   w: 'majority',
 })
-  .then(() => {
+  .then(async () => {
     console.log('✅ MongoDB connected successfully');
     console.log('📊 Database:', mongoose.connection.db.databaseName);
+    
+    // Initialize admin user on startup (if doesn't exist)
+    // This runs automatically on every server start, including Railway deployments
+    console.log('🔐 Checking admin user...');
+    await initAdminOnStartup();
   })
   .catch((error) => {
     console.error('❌ MongoDB connection error:', error.message);
