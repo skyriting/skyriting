@@ -48,6 +48,7 @@ export async function initAdminOnStartup() {
     console.log('⚠️  Please change the password after first login!');
   } catch (error) {
     console.error('❌ Error initializing admin on startup:', error.message);
+    console.error('❌ Error stack:', error.stack);
     // Don't throw - allow server to start even if admin init fails
     // Admin can be created manually later
   }
