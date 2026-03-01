@@ -25,6 +25,7 @@ import mobilityThreadRoutes from './routes/mobilityThreadRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import routeRoutes from './routes/routeRoutes.js';
 import helicopterInquiryRoutes from './routes/helicopterInquiryRoutes.js';
+import { initAdminOnStartup } from './utils/initAdminOnStartup.js';
 
 dotenv.config();
 
