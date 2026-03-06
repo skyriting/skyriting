@@ -51,8 +51,6 @@ export default function MembershipPage() {
 
   const handleEnquiry = (membership: Membership) => {
     window.location.href = `mailto:info@skyriting.com?subject=Membership Inquiry: ${membership.tier_name}&body=Interested in ${membership.tier_name} membership tier`;
-      },
-    });
   };
 
   return (

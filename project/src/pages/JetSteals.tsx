@@ -48,14 +48,7 @@ export default function JetSteals() {
   };
 
   const handleBookNow = (emptyLeg: EmptyLeg) => {
-    window.location.href = `mailto:info@skyriting.com?subject=JetSteals Booking Request&body=Departure: ${emptyLeg.departure_city}%0D%0AArrival: ${emptyLeg.arrival_city}%0D%0ADate: ${emptyLeg.departure_date}%0D%0AAircraft: ${emptyLeg.aircraft_name}`;
-        arrivalCity: emptyLeg.arrival_city,
-        departureDate: emptyLeg.departure_date.split('T')[0],
-        passengerCount: emptyLeg.passenger_capacity,
-        enquiryType: 'empty_leg',
-        emptyLegId: emptyLeg.id,
-      },
-    });
+    window.location.href = `mailto:info@skyriting.com?subject=JetSteals Booking Request&body=Departure: ${emptyLeg.departure_city}%0D%0AArrival: ${emptyLeg.arrival_city}%0D%0ADate: ${emptyLeg.departure_date}%0D%0AAircraft ID: ${emptyLeg.aircraft_id || 'N/A'}`;
   };
 
   return (
