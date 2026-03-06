@@ -350,10 +350,10 @@ function AdminPackagesContent() {
                   resetForm();
                   setShowForm(true);
                 }}
-                className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-lg hover:shadow-xl"
               >
                 <Plus className="h-5 w-5" />
-                <span>New Package</span>
+                <span>Add Package</span>
               </button>
             )}
           </div>
