@@ -8,6 +8,7 @@ import Route from '../models/Route.js';
 import Service from '../models/Service.js';
 import ServiceInquiry from '../models/ServiceInquiry.js';
 import Package from '../models/Package.js';
+import PackageInquiry from '../models/PackageInquiry.js';
 import Article from '../models/Article.js';
 import { authenticateAdmin } from '../middleware/auth.js';
 
@@ -241,6 +242,41 @@ router.patch('/service-inquiries/:id', async (req, res) => {
     res.json({ inquiry });
   } catch (error) {
     console.error('Error updating service inquiry:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Package Inquiries (admin list and update)
+router.get('/package-inquiries', async (req, res) => {
+  try {
+    const inquiries = await PackageInquiry.find()
+      .sort({ createdAt: -1 })
+      .populate('assignedTo', 'name email');
+    res.json({ inquiries });
+  } catch (error) {
+    console.error('Error fetching package inquiries:', error);
+    res.status(500).json({ error: 'Failed to fetch package inquiries' });
+  }
+});
+
+router.patch('/package-inquiries/:id', async (req, res) => {
+  try {
+    const { status, adminNotes, assignedTo } = req.body;
+    const inquiry = await PackageInquiry.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(status && { status }),
+        ...(adminNotes !== undefined && { adminNotes }),
+        ...(assignedTo && { assignedTo }),
+      },
+      { new: true }
+    );
+    if (!inquiry) {
+      return res.status(404).json({ error: 'Package inquiry not found' });
+    }
+    res.json({ inquiry });
+  } catch (error) {
+    console.error('Error updating package inquiry:', error);
     res.status(500).json({ error: error.message });
   }
 });

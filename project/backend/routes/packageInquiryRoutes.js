@@ -1,6 +1,7 @@
 import express from 'express';
 import PackageInquiry from '../models/PackageInquiry.js';
 import { sendAdminNotification } from '../utils/emailService.js';
+import { authenticateAdmin } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -54,7 +55,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all package inquiries (admin only)
-router.get('/', async (req, res) => {
+router.get('/', authenticateAdmin, async (req, res) => {
   try {
     const inquiries = await PackageInquiry.find()
       .sort({ createdAt: -1 })
@@ -68,7 +69,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get single package inquiry
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateAdmin, async (req, res) => {
   try {
     const inquiry = await PackageInquiry.findById(req.params.id)
       .populate('assignedTo', 'name email');
@@ -85,7 +86,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update package inquiry status (admin)
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticateAdmin, async (req, res) => {
   try {
     const { status, adminNotes, assignedTo } = req.body;
 

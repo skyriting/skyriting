@@ -15,11 +15,11 @@ function AdminArticlesContent() {
     slug: '',
     excerpt: '',
     content: '',
-    category: 'news',
-    image: '',
+    category: 'News',
+    imageUrl: '',
     isFeatured: false,
     publishedAt: new Date().toISOString().split('T')[0],
-    isActive: true,
+    isPublished: false,
   });
 
   useEffect(() => {
@@ -69,13 +69,25 @@ function AdminArticlesContent() {
 
       const method = editingArticle ? 'PUT' : 'POST';
 
+      const payload = {
+        title: formData.title,
+        slug: formData.slug,
+        excerpt: formData.excerpt || undefined,
+        content: formData.content,
+        category: formData.category,
+        imageUrl: formData.imageUrl || undefined,
+        isFeatured: formData.isFeatured,
+        isPublished: formData.isPublished,
+        publishedAt: formData.publishedAt ? new Date(formData.publishedAt) : new Date(),
+      };
+
       const response = await fetch(url, {
         method,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
@@ -127,11 +139,11 @@ function AdminArticlesContent() {
       slug: article.slug || '',
       excerpt: article.excerpt || '',
       content: article.content || '',
-      category: article.category || 'news',
-      image: article.image || '',
+      category: article.category || 'News',
+      imageUrl: article.imageUrl || '',
       isFeatured: article.isFeatured || false,
       publishedAt: article.publishedAt ? new Date(article.publishedAt).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-      isActive: article.isActive !== false,
+      isPublished: article.isPublished === true,
     });
     setShowForm(true);
   };
@@ -142,11 +154,11 @@ function AdminArticlesContent() {
       slug: '',
       excerpt: '',
       content: '',
-      category: 'news',
-      image: '',
+      category: 'News',
+      imageUrl: '',
       isFeatured: false,
       publishedAt: new Date().toISOString().split('T')[0],
-      isActive: true,
+      isPublished: false,
     });
     setEditingArticle(null);
   };
@@ -238,9 +250,11 @@ function AdminArticlesContent() {
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                   >
-                    <option value="news">News</option>
-                    <option value="media">Media</option>
-                    <option value="blog">Blog</option>
+                    <option value="News">News</option>
+                    <option value="Media">Media</option>
+                    <option value="Press Release">Press Release</option>
+                    <option value="Blog">Blog</option>
+                    <option value="Industry Insights">Industry Insights</option>
                   </select>
                 </div>
                 <div>
@@ -285,15 +299,15 @@ function AdminArticlesContent() {
                     if (file) {
                       const reader = new FileReader();
                       reader.onloadend = () => {
-                        setFormData({ ...formData, image: reader.result as string });
+                        setFormData({ ...formData, imageUrl: reader.result as string });
                       };
                       reader.readAsDataURL(file);
                     }
                   }}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                 />
-                {formData.image && (
-                  <img src={formData.image} alt="Preview" className="mt-2 h-32 w-auto rounded" />
+                {formData.imageUrl && (
+                  <img src={formData.imageUrl} alt="Preview" className="mt-2 h-32 w-auto rounded" />
                 )}
               </div>
 
@@ -311,12 +325,12 @@ function AdminArticlesContent() {
                 <div className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    id="isActive"
-                    checked={formData.isActive}
-                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                    id="isPublished"
+                    checked={formData.isPublished}
+                    onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
                     className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
                   />
-                  <label htmlFor="isActive" className="text-sm font-medium text-gray-700">Active</label>
+                  <label htmlFor="isPublished" className="text-sm font-medium text-gray-700">Published</label>
                 </div>
               </div>
 

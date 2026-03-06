@@ -96,7 +96,8 @@ export default function Packages() {
                       </p>
                     )}
                     <p className="text-luxury-black/70 mb-4 leading-relaxed font-luxury tracking-wide text-sm">
-                      {pkg.description}
+                      {pkg.description?.slice(0, 170)}
+                      {(pkg.description?.length ?? 0) > 170 ? '...' : ''}
                     </p>
                     {pkg.packageIncludes && pkg.packageIncludes.length > 0 && (
                       <div className="mb-4">
