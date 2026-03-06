@@ -26,6 +26,7 @@ import userRoutes from './routes/userRoutes.js';
 import routeRoutes from './routes/routeRoutes.js';
 import helicopterInquiryRoutes from './routes/helicopterInquiryRoutes.js';
 import { initAdminOnStartup } from './utils/initAdminOnStartup.js';
+import { seedDefaultServices } from './utils/seedDefaultServices.js';
 
 dotenv.config();
 
@@ -87,9 +88,10 @@ mongoose.connect(MONGODB_URI, {
     console.log('📊 Database:', mongoose.connection.db.databaseName);
     
     // Initialize admin user on startup (if doesn't exist)
-    // This runs automatically on every server start, including Railway deployments
     console.log('🔐 Checking admin user...');
     await initAdminOnStartup();
+    // Seed default services if none exist
+    await seedDefaultServices();
   })
   .catch((error) => {
     console.error('❌ MongoDB connection error:', error.message);

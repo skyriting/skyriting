@@ -7,7 +7,7 @@ const router = express.Router();
 // Create service inquiry
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, company, serviceName, subject, message } = req.body;
+    const { name, email, phone, company, serviceName, serviceSlug, subject, message } = req.body;
 
     if (!name || !email || !serviceName || !subject || !message) {
       return res.status(400).json({ error: 'Name, email, serviceName, subject, and message are required' });
@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
       phone,
       company,
       serviceName,
+      serviceSlug: serviceSlug || undefined,
       subject,
       message,
     });

@@ -1,23 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, Plus, Edit2, Trash2, ArrowLeft, Save, X } from 'lucide-react';
+import { Briefcase, Plus, Edit2, Trash2, ArrowLeft, Save, X, MessageSquare, User, Mail, Phone } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
+
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
 
 function AdminServicesContent() {
   const navigate = useNavigate();
   const [services, setServices] = useState<any[]>([]);
+  const [inquiries, setInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [inquiriesLoading, setInquiriesLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<'services' | 'inquiries'>('services');
   const [showForm, setShowForm] = useState(false);
   const [editingService, setEditingService] = useState<any>(null);
 
   const [formData, setFormData] = useState({
-    name: '',
+    title: '',
     slug: '',
+    subtitle: '',
     description: '',
-    shortDescription: '',
-    image: '',
-    deliverables: [] as string[],
-    benefits: [] as string[],
+    tagline: '',
+    imageUrl: '',
+    deliverablesText: '',
+    benefitsText: '',
+    icon: 'Plane',
     isActive: true,
     order: 0,
   });
@@ -26,26 +33,28 @@ function AdminServicesContent() {
     fetchServices();
   }, []);
 
-  const fetchServices = async () => {
+  useEffect(() => {
+    if (activeTab === 'inquiries') {
+      fetchInquiries();
+    }
+  }, [activeTab]);
+
+  const getAuthHeaders = () => {
     const token = localStorage.getItem('skyriting_auth_token');
     if (!token) {
-      navigate('/login');
-      return;
+      navigate('/3636847rgyuvfu3f/98184t763gvf/login');
+      return null;
     }
+    return { Authorization: `Bearer ${token}` };
+  };
 
-    const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
-
+  const fetchServices = async () => {
+    const headers = getAuthHeaders();
+    if (!headers) return;
     try {
-      const response = await fetch(`${API_URL}/admin/services`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch services');
-      }
-
+      setLoading(true);
+      const response = await fetch(`${API_URL}/admin/services`, { headers });
+      if (!response.ok) throw new Error('Failed to fetch services');
       const data = await response.json();
       setServices(data.services || []);
     } catch (error) {
@@ -55,34 +64,62 @@ function AdminServicesContent() {
     }
   };
 
+  const fetchInquiries = async () => {
+    const headers = getAuthHeaders();
+    if (!headers) return;
+    try {
+      setInquiriesLoading(true);
+      const response = await fetch(`${API_URL}/admin/service-inquiries`, { headers });
+      if (!response.ok) throw new Error('Failed to fetch service inquiries');
+      const data = await response.json();
+      setInquiries(data.inquiries || []);
+    } catch (error) {
+      console.error('Error fetching service inquiries:', error);
+    } finally {
+      setInquiriesLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('skyriting_auth_token');
-    if (!token) return;
-
-    const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
-
+    const headers = getAuthHeaders();
+    if (!headers) return;
+    const deliverables = formData.deliverablesText
+      .split('\n')
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const benefits = formData.benefitsText
+      .split('\n')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((line) => ({ title: line, description: '' }));
+    const payload = {
+      title: formData.title,
+      slug: formData.slug,
+      subtitle: formData.subtitle || undefined,
+      description: formData.description,
+      tagline: formData.tagline || undefined,
+      imageUrl: formData.imageUrl || undefined,
+      deliverables,
+      benefits,
+      icon: formData.icon,
+      order: formData.order,
+      isActive: formData.isActive,
+    };
     try {
       const url = editingService
         ? `${API_URL}/admin/services/${editingService._id}`
         : `${API_URL}/admin/services`;
-
       const method = editingService ? 'PUT' : 'POST';
-
       const response = await fetch(url, {
         method,
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to save service');
       }
-
       setShowForm(false);
       setEditingService(null);
       resetForm();
@@ -95,24 +132,11 @@ function AdminServicesContent() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this service?')) return;
-
-    const token = localStorage.getItem('skyriting_auth_token');
-    if (!token) return;
-
-    const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
-
+    const headers = getAuthHeaders();
+    if (!headers) return;
     try {
-      const response = await fetch(`${API_URL}/admin/services/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete service');
-      }
-
+      const response = await fetch(`${API_URL}/admin/services/${id}`, { method: 'DELETE', headers });
+      if (!response.ok) throw new Error('Failed to delete service');
       fetchServices();
     } catch (error) {
       console.error('Error deleting service:', error);
@@ -122,41 +146,52 @@ function AdminServicesContent() {
 
   const handleEdit = (service: any) => {
     setEditingService(service);
+    const deliverables = Array.isArray(service.deliverables) ? service.deliverables : [];
+    const benefits = Array.isArray(service.benefits) ? service.benefits : [];
+    const benefitsText = benefits
+      .map((b: string | { title?: string; description?: string }) =>
+        typeof b === 'string' ? b : (b.title || '') + (b.description ? ` | ${b.description}` : '')
+      )
+      .join('\n');
     setFormData({
-      name: service.name || '',
+      title: service.title || '',
       slug: service.slug || '',
+      subtitle: service.subtitle || '',
       description: service.description || '',
-      shortDescription: service.shortDescription || '',
-      image: service.image || '',
-      deliverables: service.deliverables || [],
-      benefits: service.benefits || [],
+      tagline: service.tagline || '',
+      imageUrl: service.imageUrl || '',
+      deliverablesText: deliverables.join('\n'),
+      benefitsText,
+      icon: service.icon || 'Plane',
       isActive: service.isActive !== false,
-      order: service.order || 0,
+      order: service.order ?? 0,
     });
     setShowForm(true);
   };
 
   const resetForm = () => {
     setFormData({
-      name: '',
+      title: '',
       slug: '',
+      subtitle: '',
       description: '',
-      shortDescription: '',
-      image: '',
-      deliverables: [],
-      benefits: [],
+      tagline: '',
+      imageUrl: '',
+      deliverablesText: '',
+      benefitsText: '',
+      icon: 'Plane',
       isActive: true,
       order: 0,
     });
     setEditingService(null);
   };
 
-  if (loading) {
+  if (loading && activeTab === 'services' && !showForm) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading services...</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -177,22 +212,121 @@ function AdminServicesContent() {
               </button>
               <h1 className="text-2xl font-bold text-gray-900">Manage Services</h1>
             </div>
+            {activeTab === 'services' && (
+              <button
+                onClick={() => {
+                  resetForm();
+                  setShowForm(true);
+                }}
+                className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+              >
+                <Plus className="h-5 w-5" />
+                <span>New Service</span>
+              </button>
+            )}
+          </div>
+          <div className="flex gap-2 mt-4 border-b border-gray-200">
             <button
-              onClick={() => {
-                resetForm();
-                setShowForm(true);
-              }}
-              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+              onClick={() => setActiveTab('services')}
+              className={`px-4 py-2 font-medium rounded-t-lg transition ${
+                activeTab === 'services'
+                  ? 'bg-white border border-b-0 border-gray-200 text-red-600 -mb-px'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
             >
-              <Plus className="h-5 w-5" />
-              <span>New Service</span>
+              Services ({services.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('inquiries')}
+              className={`px-4 py-2 font-medium rounded-t-lg transition flex items-center gap-2 ${
+                activeTab === 'inquiries'
+                  ? 'bg-white border border-b-0 border-gray-200 text-red-600 -mb-px'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Service Inquiries ({inquiries.length})
             </button>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {showForm ? (
+        {activeTab === 'inquiries' ? (
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="p-4 border-b border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-900">Service contact form submissions</h2>
+              <p className="text-sm text-gray-500 mt-1">Users who submitted the form on a service page</p>
+            </div>
+            {inquiriesLoading ? (
+              <div className="p-8 text-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600 mx-auto"></div>
+                <p className="text-gray-500 mt-2">Loading inquiries...</p>
+              </div>
+            ) : inquiries.length === 0 ? (
+              <div className="p-8 text-center text-gray-500">
+                <MessageSquare className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                <p>No service inquiries yet</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Service</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Message</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {inquiries.map((inq) => (
+                      <tr key={inq._id} className="hover:bg-gray-50">
+                        <td className="px-4 py-3 text-sm text-gray-500 whitespace-nowrap">
+                          {inq.createdAt ? new Date(inq.createdAt).toLocaleDateString() : '-'}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-900">{inq.name || '-'}</td>
+                        <td className="px-4 py-3 text-sm">
+                          <a href={`mailto:${inq.email}`} className="text-red-600 hover:underline">
+                            {inq.email || '-'}
+                          </a>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-700">{inq.phone || '-'}</td>
+                        <td className="px-4 py-3 text-sm">
+                          <span className="font-medium text-gray-900">{inq.serviceName || '-'}</span>
+                          {inq.serviceSlug && (
+                            <span className="block text-xs text-gray-500">/{inq.serviceSlug}</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-600 max-w-xs truncate" title={inq.message}>
+                          {inq.message || '-'}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                              inq.status === 'new'
+                                ? 'bg-blue-100 text-blue-800'
+                                : inq.status === 'contacted'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : inq.status === 'converted'
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}
+                          >
+                            {inq.status || 'new'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        ) : showForm ? (
           <div className="bg-white rounded-lg shadow p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-gray-900">
@@ -212,12 +346,18 @@ function AdminServicesContent() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Name *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Service Title *</label>
                   <input
                     type="text"
                     required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    value={formData.title}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        title: e.target.value,
+                        slug: formData.slug || e.target.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+                      })
+                    }
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
@@ -234,11 +374,23 @@ function AdminServicesContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Short Description</label>
-                <textarea
-                  value={formData.shortDescription}
-                  onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-                  rows={2}
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tagline</label>
+                <input
+                  type="text"
+                  value={formData.tagline}
+                  onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                  placeholder="e.g. Our services"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
+                <input
+                  type="text"
+                  value={formData.subtitle}
+                  onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
+                  placeholder="Short headline under the title"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                 />
               </div>
@@ -255,36 +407,62 @@ function AdminServicesContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setFormData({ ...formData, image: reader.result as string });
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
+                <label className="block text-sm font-medium text-gray-700 mb-1">Deliverables (one per line)</label>
+                <textarea
+                  value={formData.deliverablesText}
+                  onChange={(e) => setFormData({ ...formData, deliverablesText: e.target.value })}
+                  rows={4}
+                  placeholder="One item per line"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                 />
-                {formData.image && (
-                  <img src={formData.image} alt="Preview" className="mt-2 h-32 w-auto rounded" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Benefits (one per line)</label>
+                <textarea
+                  value={formData.benefitsText}
+                  onChange={(e) => setFormData({ ...formData, benefitsText: e.target.value })}
+                  rows={3}
+                  placeholder="One per line"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                <input
+                  type="text"
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                  placeholder="https://..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                />
+                {formData.imageUrl && (
+                  <img src={formData.imageUrl} alt="Preview" className="mt-2 h-32 w-auto rounded object-cover" />
                 )}
               </div>
 
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  id="isActive"
-                  checked={formData.isActive}
-                  onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                  className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
-                />
-                <label htmlFor="isActive" className="text-sm font-medium text-gray-700">Active</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
+                  <input
+                    type="number"
+                    min={0}
+                    value={formData.order}
+                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value, 10) || 0 })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                  />
+                </div>
+                <div className="flex items-center space-x-2 pt-8">
+                  <input
+                    type="checkbox"
+                    id="isActive"
+                    checked={formData.isActive}
+                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                    className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="isActive" className="text-sm font-medium text-gray-700">Active</label>
+                </div>
               </div>
 
               <div className="flex justify-end space-x-4 pt-4 border-t">
@@ -324,8 +502,19 @@ function AdminServicesContent() {
                   <div key={service._id} className="p-6 hover:bg-gray-50">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900">{service.name}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{service.shortDescription || service.description}</p>
+                        <h3 className="text-lg font-semibold text-gray-900">{service.title}</h3>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {service.subtitle || (service.description?.slice(0, 120) ?? '')}
+                          {(service.description?.length ?? 0) > 120 ? '...' : ''}
+                        </p>
+                        <a
+                          href={`/services/${service.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-red-600 hover:underline mt-1 inline-block"
+                        >
+                          View on site →
+                        </a>
                       </div>
                       <div className="flex items-center space-x-2 ml-4">
                         <button

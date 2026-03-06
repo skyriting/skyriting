@@ -114,7 +114,8 @@ export default function Services() {
                         </h3>
                       </div>
                       <p className="text-luxury-black/70 mb-4 leading-relaxed font-luxury tracking-wide text-sm">
-                        {service.description}
+                        {service.description?.slice(0, 160)}
+                        {(service.description?.length ?? 0) > 160 ? '...' : ''}
                       </p>
                       <div className="flex items-center text-luxury-red group-hover:text-luxury-red/80 transition font-luxury tracking-wide">
                         <span className="text-sm">View More</span>

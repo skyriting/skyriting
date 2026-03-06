@@ -6,6 +6,7 @@ import Booking from '../models/Booking.js';
 import Aircraft from '../models/Aircraft.js';
 import Route from '../models/Route.js';
 import Service from '../models/Service.js';
+import ServiceInquiry from '../models/ServiceInquiry.js';
 import Package from '../models/Package.js';
 import Article from '../models/Article.js';
 import { authenticateAdmin } from '../middleware/auth.js';
@@ -205,6 +206,41 @@ router.delete('/services/:id', async (req, res) => {
     }
     res.json({ message: 'Service deleted' });
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Service Inquiries (admin list and update)
+router.get('/service-inquiries', async (req, res) => {
+  try {
+    const inquiries = await ServiceInquiry.find()
+      .sort({ createdAt: -1 })
+      .populate('assignedTo', 'name email');
+    res.json({ inquiries });
+  } catch (error) {
+    console.error('Error fetching service inquiries:', error);
+    res.status(500).json({ error: 'Failed to fetch service inquiries' });
+  }
+});
+
+router.patch('/service-inquiries/:id', async (req, res) => {
+  try {
+    const { status, adminNotes, assignedTo } = req.body;
+    const inquiry = await ServiceInquiry.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(status && { status }),
+        ...(adminNotes !== undefined && { adminNotes }),
+        ...(assignedTo && { assignedTo }),
+      },
+      { new: true }
+    );
+    if (!inquiry) {
+      return res.status(404).json({ error: 'Service inquiry not found' });
+    }
+    res.json({ inquiry });
+  } catch (error) {
+    console.error('Error updating service inquiry:', error);
     res.status(500).json({ error: error.message });
   }
 });
