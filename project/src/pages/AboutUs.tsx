@@ -197,7 +197,7 @@ export default function AboutUs() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:info@skyriting.com?subject=Experience the Skyriting Difference"
-              className="bg-luxury-red text-white px-8 py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
+              className="bg-luxury-red text-white px-8 py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
             >
               Book Your Flight
             </a>

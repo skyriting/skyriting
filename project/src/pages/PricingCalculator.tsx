@@ -222,7 +222,7 @@ export default function PricingCalculator() {
 
             <button
               onClick={calculatePrice}
-              className="w-full bg-luxury-red text-white py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-lg shadow-lg flex items-center justify-center space-x-2"
+              className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-lg shadow-lg flex items-center justify-center space-x-2"
             >
               <Calculator className="h-5 w-5" />
               <span>Calculate Pricing</span>
@@ -282,7 +282,7 @@ export default function PricingCalculator() {
                         </p>
                         <a
                           href={`mailto:info@skyriting.com?subject=Booking Request for ${est.aircraft.name}&body=Departure: ${formData.departureCity}%0D%0AArrival: ${formData.arrivalCity}%0D%0AAircraft: ${est.aircraft.name}%0D%0AEstimated Cost: ${formatPrice(est.totalCost)}`}
-                          className="bg-luxury-red text-white px-6 py-2 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase inline-flex items-center space-x-2"
+                          className="bg-luxury-red text-white px-6 py-2 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase inline-flex items-center space-x-2"
                         >
                           <span>Book Now</span>
                           <ArrowRight className="h-4 w-4" />

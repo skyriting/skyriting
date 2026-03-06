@@ -321,7 +321,7 @@ export default function SearchResults() {
                             e.stopPropagation();
                             handleAircraftClick(result.aircraft._id, result);
                           }}
-                          className="w-full bg-luxury-red text-white py-2 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
+                          className="w-full bg-luxury-red text-white py-2 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
                         >
                           View Details
                         </button>

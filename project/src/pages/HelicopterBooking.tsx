@@ -216,7 +216,7 @@ export default function HelicopterBooking() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-luxury-red text-white py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase disabled:opacity-50"
+              className="w-full bg-luxury-red text-white py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase disabled:opacity-50"
             >
               {loading ? 'Submitting...' : 'Submit Booking Request'}
             </button>

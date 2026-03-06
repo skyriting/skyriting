@@ -152,7 +152,7 @@ export default function EnquiryForm({ aircraftId, aircraftName, price, currency 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-luxury-red text-white py-2.5 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+          className="w-full bg-luxury-red text-white py-2.5 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         >
           {loading ? (
             <>

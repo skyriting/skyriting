@@ -89,4 +89,9 @@
     text-transform: uppercase;
     font-weight: 300;
   }
+
+  /* Premium button corners - use for CTAs site-wide */
+  .btn-primary {
+    @apply rounded-xl;
+  }
 }

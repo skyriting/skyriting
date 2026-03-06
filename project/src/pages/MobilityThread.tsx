@@ -207,7 +207,7 @@ export default function MobilityThread() {
                 <button
                   type="submit"
                   disabled={posting || !newPost.content.trim()}
-                  className="w-full bg-luxury-red text-white py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg disabled:opacity-50"
+                  className="w-full bg-luxury-red text-white py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg disabled:opacity-50"
                 >
                   {posting ? 'Posting...' : 'Post'}
                 </button>
@@ -325,7 +325,7 @@ export default function MobilityThread() {
                           />
                           <button
                             onClick={() => handleComment(post._id || post.id || '')}
-                            className="bg-luxury-red text-white px-4 py-2 rounded-lg hover:bg-luxury-red/90 transition"
+                            className="bg-luxury-red text-white px-4 py-2 rounded-xl hover:bg-luxury-red/90 transition"
                           >
                             <Send className="h-4 w-4" />
                           </button>

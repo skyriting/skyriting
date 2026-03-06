@@ -104,7 +104,7 @@ export default function VerifyEmail() {
             </p>
             <Link
               to="/account"
-              className="inline-block px-6 py-2 bg-luxury-red text-white rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm"
+              className="inline-block px-6 py-2 bg-luxury-red text-white rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm"
             >
               Go to Account
             </Link>
@@ -144,7 +144,7 @@ export default function VerifyEmail() {
             <button
               onClick={handleResend}
               disabled={resending || cooldown > 0}
-              className="w-full flex items-center justify-center space-x-2 px-6 py-2 bg-luxury-red text-white rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center space-x-2 px-6 py-2 bg-luxury-red text-white rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {resending ? (
                 <>

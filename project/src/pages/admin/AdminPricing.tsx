@@ -54,9 +54,9 @@ function AdminPricingContent() {
   }, []);
 
   const fetchRules = async () => {
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) {
-      navigate('/3636847rgyuvfu3f/98184t763gvf/login');
+      navigate('/login');
       return;
     }
 
@@ -84,7 +84,7 @@ function AdminPricingContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) return;
 
     const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
@@ -122,7 +122,7 @@ function AdminPricingContent() {
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this pricing rule?')) return;
 
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) return;
 
     const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');

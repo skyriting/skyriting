@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import MobileNav from './components/MobileNav';
 import Home from './pages/Home';
 import Fleet from './pages/Fleet';
 import PackagePage from './pages/PackagePage';
@@ -44,7 +43,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col pb-16 md:pb-0 overflow-x-hidden">
+      <div className="min-h-screen flex flex-col overflow-x-hidden">
         <Navigation />
         <main className="flex-grow overflow-x-hidden">
           <Routes>
@@ -86,7 +85,6 @@ function App() {
           </Routes>
         </main>
         <Footer />
-        <MobileNav />
       </div>
     </Router>
   );

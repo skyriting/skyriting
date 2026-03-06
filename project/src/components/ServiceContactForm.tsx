@@ -157,7 +157,7 @@ export default function ServiceContactForm({ serviceName, onCancel }: ServiceCon
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-luxury-red text-white py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+          className="w-full bg-luxury-red text-white py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
         >
           {loading ? (
             <span>Submitting...</span>

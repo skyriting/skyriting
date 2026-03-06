@@ -348,7 +348,7 @@ export default function ServicePage() {
                 <button
                   type="submit"
                   disabled={formLoading}
-                  className="w-full bg-luxury-red text-white py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+                  className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   {formLoading ? (
                     <span>Submitting...</span>

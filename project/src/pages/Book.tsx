@@ -274,7 +274,7 @@ export default function Book() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-luxury-red text-white py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Submitting...' : 'Submit Enquiry'}
             </button>

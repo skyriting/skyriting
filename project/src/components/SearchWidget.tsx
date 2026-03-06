@@ -326,7 +326,7 @@ export default function SearchWidget() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-luxury-red text-white py-1.5 rounded hover:bg-luxury-red/90 transition font-luxury tracking-widest text-[10px] sm:text-xs uppercase flex items-center justify-center space-x-1 disabled:opacity-50"
+              className="w-full bg-luxury-red text-white py-1.5 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest text-[10px] sm:text-xs uppercase flex items-center justify-center space-x-1 disabled:opacity-50"
             >
               <span>{submitting ? 'Submitting...' : 'Submit'}</span>
             </button>
@@ -486,7 +486,7 @@ export default function SearchWidget() {
             {/* Search Button */}
             <button
               type="submit"
-              className="w-full bg-luxury-red text-white py-2.5 rounded hover:bg-luxury-red/90 transition font-luxury tracking-widest text-xs uppercase shadow-lg flex items-center justify-center gap-2"
+              className="w-full bg-luxury-red text-white py-2.5 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest text-xs uppercase shadow-lg flex items-center justify-center gap-2"
             >
               <Search className="h-4 w-4" />
               <span>Search</span>

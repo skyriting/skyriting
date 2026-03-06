@@ -177,7 +177,7 @@ export default function Quote() {
               <button
                 onClick={handleAccept}
                 disabled={accepting}
-                className="flex-1 bg-luxury-red text-white py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase disabled:opacity-50"
+                className="flex-1 bg-luxury-red text-white py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase disabled:opacity-50"
               >
                 {accepting ? 'Processing...' : 'Accept Quote'}
               </button>

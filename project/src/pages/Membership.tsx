@@ -258,7 +258,7 @@ export default function MembershipPage() {
             </a>
             <a
               href="mailto:info@skyriting.com?subject=Membership Information Request"
-              className="bg-luxury-red text-white px-8 py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg border-2 border-white inline-block"
+              className="bg-luxury-red text-white px-8 py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg border-2 border-white inline-block"
             >
               Request Information
             </a>

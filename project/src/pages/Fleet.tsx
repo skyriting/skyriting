@@ -280,7 +280,7 @@ export default function Fleet() {
                         {/* View Details Button */}
                         <Link
                           to={`/aircraft/${plane.id}`}
-                          className="w-full flex items-center justify-center space-x-2 bg-luxury-red text-white px-4 py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-xs sm:text-sm shadow-lg"
+                          className="w-full flex items-center justify-center space-x-2 bg-luxury-red text-white px-4 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase text-xs sm:text-sm shadow-lg"
                         >
                           <span>View Details</span>
                           <ArrowRight className="h-4 w-4" />
@@ -362,7 +362,7 @@ export default function Fleet() {
           </p>
           <a
             href="mailto:info@skyriting.com?subject=Expert Consultation Request"
-            className="inline-flex items-center space-x-2 bg-luxury-red text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg text-sm sm:text-base"
+            className="inline-flex items-center space-x-2 bg-luxury-red text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg text-sm sm:text-base"
           >
             <span>Get Expert Consultation</span>
             <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />

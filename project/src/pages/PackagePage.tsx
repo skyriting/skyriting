@@ -258,7 +258,7 @@ export default function PackagePage() {
           </p>
           <button
             onClick={handleEnquiry}
-            className="inline-flex items-center space-x-2 bg-luxury-red text-white px-8 py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
+            className="inline-flex items-center space-x-2 bg-luxury-red text-white px-8 py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
           >
             <span>Request a Quote</span>
             <ArrowRight className="h-5 w-5" />

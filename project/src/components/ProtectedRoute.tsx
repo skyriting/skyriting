@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { isAuthenticated } from '../lib/auth';
+import { getAuthToken } from '../lib/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,12 +8,16 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children, admin = false }: ProtectedRouteProps) {
   const location = useLocation();
-  const token = admin 
-    ? localStorage.getItem('skyriting_admin_token')
-    : localStorage.getItem('skyriting_auth_token');
+  const token = getAuthToken();
+  const role = localStorage.getItem('skyriting_user_role') || 'user';
 
   if (!token) {
-    return <Navigate to={admin ? '/3636847rgyuvfu3f/98184t763gvf/login' : '/login'} replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  // If route is admin-only, ensure logged-in user has admin role
+  if (admin && role !== 'admin') {
+    return <Navigate to="/" replace state={{ from: location }} />;
   }
   return <>{children}</>;
 }

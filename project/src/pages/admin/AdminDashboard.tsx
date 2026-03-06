@@ -18,9 +18,9 @@ function AdminDashboardContent() {
   }, []);
 
   const fetchDashboardData = async () => {
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) {
-      navigate('/3636847rgyuvfu3f/98184t763gvf/login');
+      navigate('/login');
       return;
     }
 
@@ -47,8 +47,9 @@ function AdminDashboardContent() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('skyriting_admin_token');
-    navigate('/3636847rgyuvfu3f/98184t763gvf/login');
+    localStorage.removeItem('skyriting_auth_token');
+    localStorage.removeItem('skyriting_user_role');
+    navigate('/login');
   };
 
   if (loading) {

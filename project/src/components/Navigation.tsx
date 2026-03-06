@@ -94,11 +94,11 @@ export default function Navigation() {
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             {/* Services */}
             <div className="relative group">
               <button
-                className={`flex items-center space-x-1 font-luxury tracking-wide transition-colors ${
+                className={`flex items-center space-x-0.5 font-luxury tracking-wide text-xs xl:text-sm transition-colors ${
                   isHomePage && !isScrolled
                     ? 'text-white hover:text-luxury-red'
                     : 'text-luxury-black hover:text-luxury-red'
@@ -106,15 +106,15 @@ export default function Navigation() {
                 onMouseEnter={() => setActiveDropdown('services')}
               >
                 <span>Services</span>
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" />
               </button>
               {activeDropdown === 'services' && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-2xl py-1 border border-luxury-red/10 z-50"
+                  className="absolute top-full left-0 mt-1.5 min-w-[12rem] max-w-[14rem] w-max bg-white rounded-xl shadow-xl py-1.5 border border-luxury-red/10 z-50"
                   onMouseEnter={() => setActiveDropdown('services')}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link to="/services" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide border-b border-luxury-black/10">
+                  <Link to="/services" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide border-b border-luxury-black/10 first:rounded-t-xl">
                     All Services
                   </Link>
                   {services.length > 0 ? (
@@ -122,7 +122,7 @@ export default function Navigation() {
                       <Link
                         key={service._id || service.id}
                         to={`/services/${service.slug || service.id}`}
-                        className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                        className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide"
                       >
                         {service.title}
                       </Link>
@@ -130,22 +130,22 @@ export default function Navigation() {
                   ) : (
                     // Fallback services
                     <>
-                      <Link to="/services/charter" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/charter" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Charter Services
                       </Link>
-                      <Link to="/services/aircraft-management" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/aircraft-management" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Aircraft Management
                       </Link>
-                      <Link to="/services/sourcing" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/sourcing" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Sourcing & Sales
                       </Link>
-                      <Link to="/services/advanced-air-mobility" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/advanced-air-mobility" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Advanced Air Mobility
                       </Link>
-                      <Link to="/services/mro" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/mro" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         MRO Services
                       </Link>
-                      <Link to="/services/consultancy" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/services/consultancy" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Aviation Consultancy
                       </Link>
                     </>
@@ -157,7 +157,7 @@ export default function Navigation() {
             {/* Packages */}
             <div className="relative group">
               <button
-                className={`flex items-center space-x-1 font-luxury tracking-wide transition-colors text-sm ${
+                className={`flex items-center space-x-0.5 font-luxury tracking-wide text-xs xl:text-sm transition-colors ${
                   isHomePage && !isScrolled
                     ? 'text-white hover:text-luxury-red'
                     : 'text-luxury-black hover:text-luxury-red'
@@ -165,15 +165,15 @@ export default function Navigation() {
                 onMouseEnter={() => setActiveDropdown('packages')}
               >
                 <span>Packages</span>
-                <ChevronDown className="h-3.5 w-3.5" />
+                <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" />
               </button>
               {activeDropdown === 'packages' && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-2xl py-1 border border-luxury-red/10 z-50"
+                  className="absolute top-full left-0 mt-1.5 min-w-[12rem] max-w-[14rem] w-max bg-white rounded-xl shadow-xl py-1.5 border border-luxury-red/10 z-50"
                   onMouseEnter={() => setActiveDropdown('packages')}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link to="/packages" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide border-b border-luxury-black/10">
+                  <Link to="/packages" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide border-b border-luxury-black/10 first:rounded-t-xl">
                     All Packages
                   </Link>
                   {packages.length > 0 ? (
@@ -182,23 +182,23 @@ export default function Navigation() {
                         key={pkg._id || pkg.id}
                         to={`/packages/${pkg.slug || pkg.id}`}
                         onClick={() => setIsOpen(false)}
-                        className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                        className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide"
                       >
                         {pkg.title}
                       </Link>
                     ))
                   ) : (
                     <>
-                      <Link to="/packages/skyriting-yatra" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/packages/skyriting-yatra" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Yatra
                       </Link>
-                      <Link to="/packages/skyriting-wed" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/packages/skyriting-wed" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Wed
                       </Link>
-                      <Link to="/packages/skyriting-heli" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/packages/skyriting-heli" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Heli
                       </Link>
-                      <Link to="/packages/skyriting-rescue" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                      <Link to="/packages/skyriting-rescue" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Rescue
                       </Link>
                     </>
@@ -210,7 +210,7 @@ export default function Navigation() {
             {/* Fleet */}
             <Link 
               to="/fleet" 
-              className={`font-luxury tracking-wide transition-colors whitespace-nowrap ${
+              className={`font-luxury tracking-wide text-xs xl:text-sm transition-colors whitespace-nowrap ${
                 isHomePage && !isScrolled
                   ? 'text-white hover:text-luxury-red'
                   : 'text-luxury-black hover:text-luxury-red'
@@ -222,7 +222,7 @@ export default function Navigation() {
             {/* About */}
             <div className="relative group">
               <button
-                className={`flex items-center space-x-1 font-luxury tracking-wide transition-colors text-sm ${
+                className={`flex items-center space-x-0.5 font-luxury tracking-wide text-xs xl:text-sm transition-colors ${
                   isHomePage && !isScrolled
                     ? 'text-white hover:text-luxury-red'
                     : 'text-luxury-black hover:text-luxury-red'
@@ -230,21 +230,21 @@ export default function Navigation() {
                 onMouseEnter={() => setActiveDropdown('about')}
               >
                 <span>About</span>
-                <ChevronDown className="h-3.5 w-3.5" />
+                <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" />
               </button>
               {activeDropdown === 'about' && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-2xl py-1 border border-luxury-red/10 z-50"
+                  className="absolute top-full left-0 mt-1.5 min-w-[12rem] max-w-[14rem] w-max bg-white rounded-xl shadow-xl py-1.5 border border-luxury-red/10 z-50"
                   onMouseEnter={() => setActiveDropdown('about')}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
-                  <Link to="/about" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                  <Link to="/about" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                     About Us
                   </Link>
-                  <Link to="/career" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                  <Link to="/career" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                     Career
                   </Link>
-                  <Link to="/contact" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide">
+                  <Link to="/contact" className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                     Contact Us
                   </Link>
                 </div>
@@ -254,7 +254,7 @@ export default function Navigation() {
             {/* Mobility */}
             <Link 
               to="/mobility-thread" 
-              className={`font-luxury tracking-wide transition-colors whitespace-nowrap text-sm ${
+              className={`font-luxury tracking-wide text-xs xl:text-sm transition-colors whitespace-nowrap ${
                 isHomePage && !isScrolled
                   ? 'text-white hover:text-luxury-red'
                   : 'text-luxury-black hover:text-luxury-red'
@@ -266,7 +266,7 @@ export default function Navigation() {
             {/* News */}
             <Link 
               to="/articles" 
-              className={`font-luxury tracking-wide transition-colors whitespace-nowrap text-sm ${
+              className={`font-luxury tracking-wide text-xs xl:text-sm transition-colors whitespace-nowrap ${
                 isHomePage && !isScrolled
                   ? 'text-white hover:text-luxury-red'
                   : 'text-luxury-black hover:text-luxury-red'
@@ -278,28 +278,28 @@ export default function Navigation() {
             {/* Phone - Hidden on smaller screens */}
             <a 
               href="tel:+911234567890" 
-              className={`hidden 2xl:flex items-center space-x-2 font-luxury tracking-wide transition-colors whitespace-nowrap ${
+              className={`hidden 2xl:flex items-center space-x-2 font-luxury tracking-wide text-xs xl:text-sm transition-colors whitespace-nowrap ${
                 isHomePage && !isScrolled
                   ? 'text-white hover:text-luxury-red'
                   : 'text-luxury-red hover:text-luxury-red-dark'
               }`}
             >
               <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="text-sm xl:text-base">+91 123 456 7890</span>
+              <span>+91 123 456 7890</span>
             </a>
 
             {/* Login/Account Button */}
             {isLoggedIn ? (
               <Link
                 to="/account"
-                className="bg-luxury-red text-white px-4 xl:px-6 py-2 xl:py-2.5 rounded-sm hover:bg-luxury-red-dark transition font-luxury tracking-wide shadow-lg text-xs xl:text-sm uppercase whitespace-nowrap"
+                className="bg-luxury-red text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-xl hover:bg-luxury-red-dark transition font-luxury tracking-wide shadow-lg text-xs xl:text-sm uppercase whitespace-nowrap"
               >
                 Account
               </Link>
             ) : (
               <Link
                 to="/login"
-                className="bg-luxury-red text-white px-4 xl:px-6 py-2 xl:py-2.5 rounded-sm hover:bg-luxury-red-dark transition font-luxury tracking-wide shadow-lg text-xs xl:text-sm uppercase whitespace-nowrap"
+                className="bg-luxury-red text-white px-4 xl:px-5 py-2 xl:py-2.5 rounded-xl hover:bg-luxury-red-dark transition font-luxury tracking-wide shadow-lg text-xs xl:text-sm uppercase whitespace-nowrap"
               >
                 Login
               </Link>
@@ -317,23 +317,23 @@ export default function Navigation() {
         </div>
 
         {isOpen && (
-          <div className="lg:hidden pb-6 bg-white/95 backdrop-blur-md rounded-lg mt-2 shadow-xl max-h-[90vh] overflow-y-auto">
-            <div className="space-y-2 px-4">
+          <div className="lg:hidden pb-6 bg-white/95 backdrop-blur-md rounded-xl mt-2 shadow-xl max-h-[90vh] overflow-y-auto border border-luxury-red/10">
+            <div className="space-y-0 px-3">
               {/* Services */}
               <div>
                 <button
                   onClick={() => toggleDropdown('mobile-services')}
-                  className="w-full flex items-center justify-between px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
                 >
                   <span>Services</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className={`h-4 w-4 transition-transform ${activeDropdown === 'mobile-services' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'mobile-services' && (
-                  <div className="bg-luxury-white-off py-2">
+                  <div className="bg-luxury-white-off/80 py-1.5 rounded-lg mb-1">
                     <Link 
                       to="/services" 
                       onClick={() => setIsOpen(false)}
-                      className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide border-b border-luxury-black/10"
+                      className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide border-b border-luxury-black/10"
                     >
                       All Services
                     </Link>
@@ -343,7 +343,7 @@ export default function Navigation() {
                           key={service._id || service.id}
                           to={`/services/${service.slug || service.id}`}
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           {service.title}
                         </Link>
@@ -353,42 +353,42 @@ export default function Navigation() {
                         <Link 
                           to="/services/charter" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Charter Services
                         </Link>
                         <Link 
                           to="/services/aircraft-management" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Aircraft Management
                         </Link>
                         <Link 
                           to="/services/sourcing" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Sourcing & Sales
                         </Link>
                         <Link 
                           to="/services/advanced-air-mobility" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Advanced Air Mobility
                         </Link>
                         <Link 
                           to="/services/mro" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           MRO Services
                         </Link>
                         <Link 
                           to="/services/consultancy" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Aviation Consultancy
                         </Link>
@@ -402,17 +402,17 @@ export default function Navigation() {
               <div>
                 <button
                   onClick={() => toggleDropdown('mobile-packages')}
-                  className="w-full flex items-center justify-between px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
                 >
                   <span>Packages</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className={`h-4 w-4 transition-transform ${activeDropdown === 'mobile-packages' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'mobile-packages' && (
-                  <div className="bg-luxury-white-off py-2">
+                  <div className="bg-luxury-white-off/80 py-1.5 rounded-lg mb-1">
                     <Link 
                       to="/packages" 
                       onClick={() => setIsOpen(false)}
-                      className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide border-b border-luxury-black/10"
+                      className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide border-b border-luxury-black/10"
                     >
                       All Packages
                     </Link>
@@ -422,7 +422,7 @@ export default function Navigation() {
                           key={pkg._id || pkg.id}
                           to={`/packages/${pkg.slug || pkg.id}`}
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           {pkg.title}
                         </Link>
@@ -432,28 +432,28 @@ export default function Navigation() {
                         <Link 
                           to="/packages/skyriting-yatra" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Skyriting Yatra
                         </Link>
                         <Link 
                           to="/packages/skyriting-wed" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Skyriting Wed
                         </Link>
                         <Link 
                           to="/packages/skyriting-heli" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Skyriting Heli
                         </Link>
                         <Link 
                           to="/packages/skyriting-rescue" 
                           onClick={() => setIsOpen(false)}
-                          className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
                           Skyriting Rescue
                         </Link>
@@ -467,7 +467,7 @@ export default function Navigation() {
               <Link 
                 to="/fleet" 
                 onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                className="block px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                className="block px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
               >
                 Fleet
               </Link>
@@ -475,31 +475,31 @@ export default function Navigation() {
               <div>
                 <button
                   onClick={() => toggleDropdown('mobile-about')}
-                  className="w-full flex items-center justify-between px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                  className="w-full flex items-center justify-between px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
                 >
                   <span>About</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className={`h-4 w-4 transition-transform ${activeDropdown === 'mobile-about' ? 'rotate-180' : ''}`} />
                 </button>
                 {activeDropdown === 'mobile-about' && (
-                  <div className="bg-luxury-white-off py-2">
+                  <div className="bg-luxury-white-off/80 py-1.5 rounded-lg mb-1">
                     <Link 
                       to="/about" 
                       onClick={() => setIsOpen(false)}
-                      className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                      className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                     >
                       About Us
                     </Link>
                     <Link 
                       to="/career" 
                       onClick={() => setIsOpen(false)}
-                      className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                      className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                     >
                       Career
                     </Link>
                     <Link 
                       to="/contact" 
                       onClick={() => setIsOpen(false)}
-                      className="block px-8 py-2 text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                      className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                     >
                       Contact Us
                     </Link>
@@ -508,23 +508,16 @@ export default function Navigation() {
               </div>
 
               <Link 
-                to="/fleet" 
-                onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                className="block px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
-              >
-                Fleet
-              </Link>
-              <Link 
                 to="/mobility-thread" 
                 onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                className="block px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                className="block px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
               >
-                Mobility Thread
+                Mobility
               </Link>
               <Link 
                 to="/articles" 
                 onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                className="block px-4 py-3 text-luxury-black hover:bg-luxury-red hover:text-white transition font-luxury tracking-wide"
+                className="block px-4 py-2.5 text-sm text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide rounded-lg"
               >
                 News & Media
               </Link>
@@ -532,7 +525,7 @@ export default function Navigation() {
                 <Link 
                   to="/account" 
                   onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                  className="block px-4 py-3 bg-luxury-red text-white text-center rounded-sm mx-4 mt-2 font-luxury tracking-wide uppercase"
+                  className="block px-4 py-2.5 bg-luxury-red text-white text-center rounded-xl mx-3 mt-3 font-luxury tracking-wide text-sm uppercase"
                 >
                   Account
                 </Link>
@@ -540,7 +533,7 @@ export default function Navigation() {
                 <Link 
                   to="/login" 
                   onClick={() => { setIsOpen(false); setActiveDropdown(null); }}
-                  className="block px-4 py-3 bg-luxury-red text-white text-center rounded-sm mx-4 mt-2 font-luxury tracking-wide uppercase"
+                  className="block px-4 py-2.5 bg-luxury-red text-white text-center rounded-xl mx-3 mt-3 font-luxury tracking-wide text-sm uppercase"
                 >
                   Login
                 </Link>

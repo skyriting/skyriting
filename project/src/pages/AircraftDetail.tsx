@@ -427,7 +427,7 @@ export default function AircraftDetail() {
             </button>
             <a
               href="mailto:info@skyriting.com?subject=Booking Request for ${aircraft.name}"
-              className="flex items-center justify-center space-x-2 px-6 sm:px-8 py-3 sm:py-4 bg-luxury-red text-white rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
+              className="flex items-center justify-center space-x-2 px-6 sm:px-8 py-3 sm:py-4 bg-luxury-red text-white rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
             >
               <span>Book This Aircraft</span>
               <Plane className="h-5 w-5" />

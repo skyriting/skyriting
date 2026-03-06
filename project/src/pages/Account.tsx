@@ -292,7 +292,7 @@ export default function Account() {
 
                 <button
                   onClick={handleLogout}
-                  className="mt-4 w-full flex items-center justify-center space-x-2 bg-luxury-red text-white py-2 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-wide"
+                  className="mt-4 w-full flex items-center justify-center space-x-2 bg-luxury-red text-white py-2 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-wide"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
@@ -302,7 +302,7 @@ export default function Account() {
               <div className="bg-white rounded-xl shadow-lg p-6 mt-6 border border-luxury-black/5">
                 <h3 className="text-lg font-luxury font-light text-luxury-black mb-4 tracking-luxury">Quick Actions</h3>
                 <div className="space-y-3">
-                  <button className="w-full bg-luxury-red text-white py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-wide">
+                  <button className="w-full bg-luxury-red text-white py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-wide">
                     New Booking
                   </button>
                   <Link to="/packages" className="w-full bg-luxury-white-off text-luxury-black/70 py-3 rounded-lg hover:bg-luxury-white-cream transition font-luxury tracking-wide text-center block">
@@ -476,7 +476,7 @@ export default function Account() {
                     </p>
                     <button
                       onClick={() => navigate('/')}
-                      className="bg-luxury-red text-white px-8 py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
+                      className="bg-luxury-red text-white px-8 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
                     >
                       {activeTab === 'bookings' ? 'Book Your First Flight' : 'Search Flights'}
                     </button>
@@ -536,7 +536,7 @@ export default function Account() {
               </button>
               <button
                 onClick={handleReschedule}
-                className="flex-1 bg-luxury-red text-white py-2 rounded-lg hover:bg-luxury-red/90 font-luxury tracking-widest uppercase"
+                className="flex-1 bg-luxury-red text-white py-2 rounded-xl hover:bg-luxury-red/90 font-luxury tracking-widest uppercase"
               >
                 Submit Request
               </button>

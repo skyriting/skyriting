@@ -173,7 +173,7 @@ export default function JetSteals() {
                       </div>
                       <button
                         onClick={() => handleBookNow(emptyLeg)}
-                        className="bg-luxury-red text-white px-6 py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
+                        className="bg-luxury-red text-white px-6 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
                       >
                         Book Now
                       </button>
@@ -191,7 +191,7 @@ export default function JetSteals() {
               </p>
               <button
                 onClick={() => window.location.href = 'mailto:info@skyriting.com?subject=Explore Charter Options'}
-                className="bg-luxury-red text-white px-8 py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
+                className="bg-luxury-red text-white px-8 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase"
               >
                 Explore Charter Options
               </button>

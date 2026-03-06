@@ -68,7 +68,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// User Login
+// Unified Login - handles both regular users and admins via single endpoint
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -77,30 +77,60 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const user = await User.findOne({ email });
-    if (!user) {
+    // First try to find a regular user
+    let user = await User.findOne({ email });
+
+    if (user) {
+      const isMatch = await user.comparePassword(password);
+      if (!isMatch) {
+        return res.status(401).json({ error: 'Invalid credentials' });
+      }
+
+      const token = jwt.sign(
+        { id: user._id, email: user.email, role: user.role },
+        JWT_SECRET,
+        { expiresIn: '30d' }
+      );
+
+      return res.json({
+        token,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          emailVerified: user.emailVerified,
+        },
+      });
+    }
+
+    // If no regular user found, try admin user with same credentials
+    const admin = await AdminUser.findOne({ email });
+    if (!admin) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
+    const isAdminMatch = await admin.comparePassword(password);
+    if (!isAdminMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role },
+    const adminToken = jwt.sign(
+      { id: admin._id, email: admin.email, role: admin.role || 'admin' },
       JWT_SECRET,
-      { expiresIn: '30d' }
+      { expiresIn: '7d' }
     );
 
-    res.json({
-      token,
+    // For frontend, keep the same response shape (`user`) and always mark admins as verified
+    return res.json({
+      token: adminToken,
       user: {
-        id: user._id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        emailVerified: user.emailVerified,
+        id: admin._id,
+        email: admin.email,
+        name: admin.name,
+        role: admin.role || 'admin',
+        emailVerified: true,
+        isAdmin: true,
       },
     });
   } catch (error) {

@@ -58,7 +58,7 @@ export default function ContactUs() {
             </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="bg-luxury-red text-white px-6 py-3 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-wide"
+              className="bg-luxury-red text-white px-6 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-wide"
             >
               Send Another Message
             </button>
@@ -233,7 +233,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-luxury-red text-white py-4 rounded-lg hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+                className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
               >
                 {loading ? (
                   <span>Sending...</span>

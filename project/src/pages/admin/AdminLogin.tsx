@@ -31,7 +31,10 @@ export default function AdminLogin() {
         throw new Error(data.error || 'Login failed');
       }
 
-      localStorage.setItem('skyriting_admin_token', data.token);
+      // Keep this for backward compatibility if someone still uses the admin login URL,
+      // but reuse the unified auth token and role storage
+      localStorage.setItem('skyriting_auth_token', data.token);
+      localStorage.setItem('skyriting_user_role', data.admin?.role || 'admin');
       navigate('/3636847rgyuvfu3f/98184t763gvf/dashboard');
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check your credentials.');

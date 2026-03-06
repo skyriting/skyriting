@@ -24,16 +24,24 @@ export default function Login() {
 
     try {
       const response = await login(formData);
-      
-      // Check if email is verified
-      if (!response.user?.emailVerified) {
+      const userRole = response.user?.role || 'user';
+
+      // For regular users, enforce email verification
+      if (userRole !== 'admin' && !response.user?.emailVerified) {
         setVerificationMessage('Please verify your email address to access your account. Check your inbox for the verification link.');
         setError('Email not verified');
         return;
       }
-      
+
       setAuthToken(response.token);
-      navigate('/account');
+      // Persist role so we can protect admin routes on the frontend
+      localStorage.setItem('skyriting_user_role', userRole);
+
+      if (userRole === 'admin') {
+        navigate('/3636847rgyuvfu3f/98184t763gvf/dashboard');
+      } else {
+        navigate('/account');
+      }
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -68,7 +76,7 @@ export default function Login() {
                 <p className="font-medium mb-1">Email Verification Required</p>
                 <p className="text-sm">{verificationMessage}</p>
                 <Link
-                  to="/verify-email"
+                  to={formData.email ? `/verify-email?email=${encodeURIComponent(formData.email)}` : '/verify-email'}
                   className="text-sm text-luxury-red hover:text-luxury-red/80 underline mt-1 inline-block"
                 >
                   Resend verification email
@@ -126,7 +134,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-luxury tracking-widest uppercase rounded-lg text-white bg-luxury-red hover:bg-luxury-red/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-luxury-red disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-luxury tracking-widest uppercase rounded-xl text-white bg-luxury-red hover:bg-luxury-red/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-luxury-red disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
                 'Signing in...'

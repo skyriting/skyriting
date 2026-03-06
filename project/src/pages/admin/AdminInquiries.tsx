@@ -19,9 +19,9 @@ function AdminInquiriesContent() {
   }, [statusFilter]);
 
   const fetchInquiries = async () => {
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) {
-      navigate('/3636847rgyuvfu3f/98184t763gvf/login');
+      navigate('/login');
       return;
     }
 
@@ -56,7 +56,7 @@ function AdminInquiriesContent() {
   };
 
   const updateInquiryStatus = async (id: string, newStatus: string) => {
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) return;
 
     const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
@@ -88,7 +88,7 @@ function AdminInquiriesContent() {
   const saveNotes = async () => {
     if (!selectedInquiry) return;
 
-    const token = localStorage.getItem('skyriting_admin_token');
+    const token = localStorage.getItem('skyriting_auth_token');
     if (!token) return;
 
     const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
