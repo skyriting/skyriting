@@ -42,6 +42,7 @@ export const authenticateAdmin = async (req, res, next) => {
     }
 
     req.admin = admin;
+    req.user = admin; // Also set req.user for compatibility with admin routes
     next();
   } catch (error) {
     res.status(401).json({ error: 'Invalid token' });

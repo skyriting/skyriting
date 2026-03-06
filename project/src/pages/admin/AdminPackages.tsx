@@ -191,6 +191,19 @@ function AdminPackagesContent() {
   }, []);
 
   const payload = useMemo(() => {
+    // Filter out empty entries from arrays to avoid validation errors
+    const tourHighlights = parseLines(formData.tourHighlightsText)
+      .filter((t) => t.trim())
+      .map((t) => ({ text: t }));
+    
+    const itinerary = parseItinerary(formData.itineraryText).filter(
+      (day) => day.title && day.description
+    );
+    
+    const durationOptions = parseDurationOptions(formData.durationOptionsText).filter(
+      (opt) => opt.name && opt.name.trim()
+    );
+
     return {
       title: formData.title,
       slug: formData.slug,
@@ -203,10 +216,10 @@ function AdminPackagesContent() {
       dateFlexibility: formData.dateFlexibility || undefined,
       personCapacity: formData.personCapacity || undefined,
       packageIncludes: parseLines(formData.packageIncludesText),
-      tourHighlights: parseLines(formData.tourHighlightsText).map((t) => ({ text: t })),
+      tourHighlights,
       packageTypes: parseLines(formData.packageTypesText),
-      durationOptions: parseDurationOptions(formData.durationOptionsText),
-      itinerary: parseItinerary(formData.itineraryText),
+      durationOptions,
+      itinerary,
       isActive: formData.isActive,
       order: formData.order,
     };
