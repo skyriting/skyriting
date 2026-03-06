@@ -333,7 +333,7 @@ function AdminPackagesContent() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/dashboard')}
@@ -350,7 +350,7 @@ function AdminPackagesContent() {
                   resetForm();
                   setShowForm(true);
                 }}
-                className="flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-lg hover:shadow-xl"
+                className="flex items-center justify-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-lg hover:shadow-xl"
               >
                 <Plus className="h-5 w-5" />
                 <span>Add Package</span>
@@ -706,7 +706,17 @@ function AdminPackagesContent() {
               {packages.length === 0 ? (
                 <div className="p-8 text-center text-gray-500">
                   <Package className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                  <p>No packages found</p>
+                  <p className="mb-4">No packages found</p>
+                  <button
+                    onClick={() => {
+                      resetForm();
+                      setShowForm(true);
+                    }}
+                    className="inline-flex items-center space-x-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-lg"
+                  >
+                    <Plus className="h-5 w-5" />
+                    <span>Add Your First Package</span>
+                  </button>
                 </div>
               ) : (
                 packages.map((pkg) => (
