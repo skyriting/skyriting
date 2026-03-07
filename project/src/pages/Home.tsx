@@ -96,12 +96,7 @@ export default function Home() {
             <span className="text-white/90 text-xs tracking-widest uppercase font-medium">India's Premium Private Aviation</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white text-center tracking-tight mb-4 leading-snug max-w-4xl">
-            Charter private jets and helicopters across India. <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 font-medium whitespace-nowrap">Fast, safe, luxurious</span>
-             — your sky, your schedule.
-          </h1>
+         
 
           {/* Search Widget */}
           <div className="w-full max-w-4xl mt-8">
