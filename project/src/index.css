@@ -63,10 +63,10 @@
     }
   }
 
-  h1 { @apply text-2xl sm:text-3xl lg:text-5xl font-light tracking-tight; }
-  h2 { @apply text-xl sm:text-2xl lg:text-3xl font-light tracking-tight; }
-  h3 { @apply text-lg sm:text-xl lg:text-2xl font-light tracking-tight; }
-  p { @apply text-sm sm:text-base; }
+  h1 { @apply text-xl sm:text-2xl lg:text-4xl font-light tracking-tight; }
+  h2 { @apply text-lg sm:text-xl lg:text-2xl font-light tracking-tight; }
+  h3 { @apply text-base sm:text-lg lg:text-xl font-light tracking-tight; }
+  p { @apply text-xs sm:text-sm; }
 }
 
 @layer utilities {
