@@ -25,6 +25,9 @@ function AdminFleetContent() {
       fuelCostPerKm: 0,
       crewExpensePerHour: 0,
     },
+    passenger_capacity: 0,
+    range_km: 0,
+    cruise_speed: 0,
     specs: {
       seats: 0,
       passenger_capacity: 0,
@@ -132,7 +135,12 @@ function AdminFleetContent() {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          passenger_capacity: formData.specs.passenger_capacity || formData.specs.seats,
+          cruise_speed: formData.specs.cruise_speed || formData.specs.speed,
+          range_km: formData.specs.range_km,
+        }),
       });
 
       if (!response.ok) {
@@ -194,6 +202,9 @@ function AdminFleetContent() {
         fuelCostPerKm: 0,
         crewExpensePerHour: 0,
       },
+      passenger_capacity: aircraftData.passenger_capacity || aircraftData.specs?.passenger_capacity || 0,
+      range_km: aircraftData.range_km || aircraftData.specs?.range_km || 0,
+      cruise_speed: aircraftData.cruise_speed || aircraftData.specs?.cruise_speed || 0,
       specs: aircraftData.specs || {
         seats: 0,
         passenger_capacity: 0,
@@ -240,6 +251,9 @@ function AdminFleetContent() {
         fuelCostPerKm: 0,
         crewExpensePerHour: 0,
       },
+      passenger_capacity: 0,
+      range_km: 0,
+      cruise_speed: 0,
       specs: {
         seats: 0,
         passenger_capacity: 0,
@@ -503,10 +517,14 @@ function AdminFleetContent() {
                       required
                       min="1"
                       value={formData.specs.seats}
-                      onChange={(e) => setFormData({
-                        ...formData,
-                        specs: { ...formData.specs, seats: parseInt(e.target.value) || 0, passenger_capacity: parseInt(e.target.value) || 0 },
-                      })}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setFormData({
+                          ...formData,
+                          passenger_capacity: val,
+                          specs: { ...formData.specs, seats: val, passenger_capacity: val },
+                        });
+                      }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
@@ -517,10 +535,14 @@ function AdminFleetContent() {
                       required
                       min="0"
                       value={formData.specs.speed}
-                      onChange={(e) => setFormData({
-                        ...formData,
-                        specs: { ...formData.specs, speed: parseInt(e.target.value) || 0, cruise_speed: parseInt(e.target.value) || 0 },
-                      })}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setFormData({
+                          ...formData,
+                          cruise_speed: val,
+                          specs: { ...formData.specs, speed: val, cruise_speed: val },
+                        });
+                      }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
@@ -531,10 +553,14 @@ function AdminFleetContent() {
                       required
                       min="0"
                       value={formData.specs.range_km}
-                      onChange={(e) => setFormData({
-                        ...formData,
-                        specs: { ...formData.specs, range_km: parseInt(e.target.value) || 0 },
-                      })}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setFormData({
+                          ...formData,
+                          range_km: val,
+                          specs: { ...formData.specs, range_km: val },
+                        });
+                      }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                     />
                   </div>
