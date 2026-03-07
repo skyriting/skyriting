@@ -15,7 +15,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 export default function Services() {
-  const [services, setServices] = useState<(Service & { icon?: React.ComponentType<{ className?: string }> })[]>([]);
+  const [services, setServices] = useState<(Service & { iconComponent?: React.ComponentType<{ className?: string }> })[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Services() {
           // Map icon names to components
           const mappedServices = response.services.map((service: Service) => ({
             ...service,
-            icon: iconMap[service.icon || 'Plane'] || Plane,
+            iconComponent: iconMap[service.icon || 'Plane'] || Plane,
           }));
           setServices(mappedServices);
         }
@@ -81,45 +81,46 @@ export default function Services() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {services.map((service) => {
-                const Icon = service.icon;
+                const IconComponent = (service as any).iconComponent || Plane;
                 return (
                   <Link
                     key={service._id || service.id}
                     to={`/services/${service.slug || service.id}`}
-                    className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-luxury-black/10 group"
+                    className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-luxury-black/10 group flex flex-col"
                   >
-                    <div className="relative h-48 bg-luxury-black/5">
+                    <div className="relative h-56 bg-luxury-black/5 overflow-hidden">
                       {service.imageUrl ? (
                         <img
                           src={service.imageUrl}
                           alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Icon className="h-16 w-16 text-luxury-black/20" />
+                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                          <IconComponent className="h-16 w-16 text-luxury-black/10" />
                         </div>
                       )}
-                      <div className="absolute top-4 right-4 bg-luxury-red text-white px-3 py-1 rounded-full text-sm font-luxury tracking-wide">
-                        {service.title.split(' ')[0]}
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className="bg-luxury-red/10 p-2 rounded-lg">
-                          <Icon className="h-6 w-6 text-luxury-red" />
+                    <div className="p-8 flex-1 flex flex-col">
+                      <div className="flex items-center space-x-4 mb-4">
+                        <div className="bg-luxury-red/10 p-3 rounded-xl group-hover:bg-luxury-red group-hover:text-white transition-colors duration-300">
+                          <IconComponent className="h-6 w-6 text-luxury-red group-hover:text-white transition-colors" />
                         </div>
-                        <h3 className="text-xl font-luxury font-light text-luxury-black tracking-luxury">
+                        <h3 className="text-xl font-luxury font-light text-luxury-black tracking-luxury group-hover:text-luxury-red transition-colors">
                           {service.title}
                         </h3>
                       </div>
-                      <p className="text-luxury-black/70 mb-4 leading-relaxed font-luxury tracking-wide text-sm">
-                        {service.description?.slice(0, 160)}
-                        {(service.description?.length ?? 0) > 160 ? '...' : ''}
+                      <p className="text-luxury-black/60 mb-6 leading-relaxed font-luxury tracking-wide text-sm flex-1">
+                        {service.description?.slice(0, 140)}
+                        {(service.description?.length ?? 0) > 140 ? '...' : ''}
                       </p>
-                      <div className="flex items-center text-luxury-red group-hover:text-luxury-red/80 transition font-luxury tracking-wide">
-                        <span className="text-sm">View More</span>
-                        <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <div className="flex items-center justify-between pt-4 border-t border-luxury-black/5">
+                        <div className="flex items-center text-luxury-red font-luxury tracking-[0.2em] font-medium uppercase text-[10px]">
+                          <span>Discover More</span>
+                          <ArrowRight className="h-3 w-3 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-gray-300 group-hover:text-luxury-red transition-colors" />
                       </div>
                     </div>
                   </Link>

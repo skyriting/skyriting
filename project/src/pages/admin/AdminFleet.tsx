@@ -137,9 +137,9 @@ function AdminFleetContent() {
         },
         body: JSON.stringify({
           ...formData,
-          passenger_capacity: formData.specs.passenger_capacity || formData.specs.seats,
-          cruise_speed: formData.specs.cruise_speed || formData.specs.speed,
-          range_km: formData.specs.range_km,
+          passenger_capacity: Number(formData.specs.passenger_capacity || formData.specs.seats || 0),
+          cruise_speed: Number(formData.specs.cruise_speed || formData.specs.speed || 0),
+          range_km: Number(formData.specs.range_km || 0),
         }),
       });
 
@@ -151,6 +151,7 @@ function AdminFleetContent() {
       setShowForm(false);
       setEditingAircraft(null);
       resetForm();
+      alert('Aircraft saved successfully!');
       fetchAircraft();
     } catch (error: any) {
       console.error('Error saving aircraft:', error);

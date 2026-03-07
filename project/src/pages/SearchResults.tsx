@@ -11,7 +11,7 @@ export default function SearchResults() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(window.innerWidth > 1024);
   const [filters, setFilters] = useState({
     aircraftClass: 'all',
     minCapacity: 1,
@@ -95,7 +95,7 @@ export default function SearchResults() {
           {/* Filters Sidebar */}
           {showFilters && (
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
+              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24 border border-luxury-black/5">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-luxury font-light text-luxury-black flex items-center tracking-luxury">
                     <Filter className="h-5 w-5 mr-2 text-luxury-red" />
@@ -288,10 +288,10 @@ export default function SearchResults() {
                           </div>
                         </div>
 
-                        {result.aircraft.amenities && result.aircraft.amenities.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {result.aircraft.amenities.slice(0, 4).map((amenity, i) => (
-                              <span
+                          {result.aircraft.amenities && result.aircraft.amenities.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {result.aircraft.amenities.slice(0, 4).map((amenity: string, i: number) => (
+                                <span
                                 key={i}
                                 className="px-2 py-1 bg-luxury-red/10 text-luxury-red text-xs rounded font-luxury tracking-wide"
                               >

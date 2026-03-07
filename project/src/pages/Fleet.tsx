@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Users, Gauge, MapPin, Calendar, UserCheck, Luggage, Plane, ArrowRight, Search, ChevronRight } from 'lucide-react';
+import { Users, Gauge, MapPin, Calendar, UserCheck, Luggage, ArrowRight, Search, ChevronRight } from 'lucide-react';
 import { getAircraft } from '../lib/api';
 import type { Aircraft } from '../lib/types';
 
@@ -72,17 +72,11 @@ export default function Fleet() {
     setCurrentPage(1); // Reset to first page when filters change
   }, [selectedCategory, searchQuery]);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+
 
   const getSpecValue = (aircraft: any, specKey: string, fallbackKey?: string) => {
     const specs = aircraft.specs || {};
-    return specs[specKey] || aircraft[fallbackKey] || 'N/A';
+    return (specs as any)[specKey] || (aircraft as any)[fallbackKey as string] || 'N/A';
   };
 
   return (
@@ -206,16 +200,16 @@ export default function Fleet() {
 
                       <div className="p-5 sm:p-6">
                         {/* Aircraft Name and Type */}
-                        <h3 className="text-xl sm:text-2xl font-luxury font-light text-luxury-black mb-1 tracking-luxury">
+                        <h3 className="text-lg sm:text-xl font-luxury font-light text-luxury-black mb-1 tracking-luxury">
                           {plane.name}
                         </h3>
-                        <p className="text-sm sm:text-base text-luxury-red mb-3 font-luxury tracking-wide uppercase">
+                        <p className="text-xs sm:text-sm text-luxury-red mb-3 font-luxury tracking-wide uppercase">
                           {plane.category || plane.type || 'Jet'}
                         </p>
 
                         {/* Description */}
                         {plane.description && (
-                          <p className="text-sm text-luxury-black/70 mb-4 line-clamp-2 font-luxury tracking-wide leading-relaxed">
+                          <p className="text-xs text-luxury-black/70 mb-4 line-clamp-2 font-luxury tracking-wide leading-relaxed">
                             {plane.description}
                           </p>
                         )}
@@ -258,7 +252,7 @@ export default function Fleet() {
                             </p>
                           </div>
                           <div className="text-center">
-                            <User className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-red mx-auto mb-1" />
+                            <Users className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-red mx-auto mb-1" />
                             <p className="text-xs text-luxury-black/70 font-luxury mb-0.5">Flight Attendant</p>
                             <p className="text-sm sm:text-base font-luxury font-light text-luxury-black">
                               {specs.flightAttendant ? 'Yes' : 'No'}

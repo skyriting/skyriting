@@ -129,24 +129,31 @@ export default function ServicePage() {
       </section>
 
       {/* Hero Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-luxury-black to-black text-white overflow-hidden relative">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-luxury-red/40 rounded-full blur-[120px]"></div>
+      <section className="py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-luxury-black via-gray-900 to-black text-white overflow-hidden relative">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-luxury-red/30 rounded-full blur-[120px]"></div>
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-luxury-red/20 rounded-full blur-[120px]"></div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           {service.tagline && (
-            <p className="text-sm sm:text-base text-luxury-red mb-2 font-luxury tracking-[0.3em] uppercase text-center font-semibold">
-              {service.tagline}
-            </p>
+            <div className="inline-block px-4 py-1.5 border border-luxury-red/30 bg-luxury-red/5 rounded-full mb-6 backdrop-blur-sm">
+              <p className="text-xs sm:text-sm text-luxury-red font-luxury tracking-[0.3em] uppercase font-semibold">
+                {service.tagline}
+              </p>
+            </div>
           )}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-luxury font-light mb-4 sm:mb-6 tracking-luxury text-center leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-luxury font-light mb-8 tracking-luxury leading-tight">
             {service.title}
           </h1>
           {service.subtitle && (
-            <p className="text-xl sm:text-2xl text-white/80 mb-4 font-luxury tracking-wide text-center max-w-3xl mx-auto">
+            <p className="text-xl sm:text-2xl text-white/60 mb-10 font-luxury tracking-wide max-w-3xl mx-auto font-light leading-relaxed">
               {service.subtitle}
             </p>
           )}
+          <div className="flex justify-center">
+            <div className="w-24 h-1 bg-luxury-red rounded-full"></div>
+          </div>
         </div>
       </section>
 
@@ -166,16 +173,51 @@ export default function ServicePage() {
       )}
 
       {/* Service Description */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-luxury-white">
+      <section className="py-20 sm:py-24 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto mb-16 sm:mb-20">
-            <h2 className="text-2xl sm:text-3xl font-luxury font-light text-luxury-black mb-8 tracking-luxury border-l-4 border-luxury-red pl-6">
-              Overview
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-luxury-black/80 leading-relaxed font-luxury tracking-wide">
-              {service.description}
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div>
+              <h2 className="text-sm font-luxury font-bold text-luxury-red mb-4 tracking-[0.4em] uppercase">
+                Discover More
+              </h2>
+              <h3 className="text-3xl sm:text-4xl font-luxury font-light text-luxury-black mb-8 tracking-luxury leading-tight">
+                Experience the Pinnacle of Aviation Excellence
+              </h3>
+              <p className="text-lg text-luxury-black/70 leading-relaxed font-luxury tracking-wide mb-8">
+                {service.description}
+              </p>
+              <div className="space-y-4">
+                {[
+                  'Personalized concierge at every step',
+                  'Rigorous safety and maintenance protocols',
+                  'Global reach with local expertise',
+                  'Discrete and secure travel solutions'
+                ].map((point, idx) => (
+                  <div key={idx} className="flex items-center space-x-3">
+                    <div className="w-1.5 h-1.5 bg-luxury-red rounded-full"></div>
+                    <span className="text-sm font-luxury tracking-wide text-luxury-black/80">{point}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 border border-luxury-red/10 rounded-3xl -z-10 translate-x-4 translate-y-4"></div>
+              <div className="rounded-3xl overflow-hidden shadow-2xl relative">
+                <img
+                  src={service.imageUrl || 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=800&q=80'}
+                  alt={service.title}
+                  className="w-full h-full object-cover aspect-[4/5]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/40 to-transparent"></div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Main Content Section */}
+      <section className="py-16 sm:py-20 bg-luxury-white-off">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Additional Images */}
           {service.images && service.images.length > 0 && (
@@ -200,7 +242,7 @@ export default function ServicePage() {
                   {service.deliverables && service.deliverables.length > 0 ? 'Our Deliverables' : 'Our Services'}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-                  {(service.deliverables || service.features).map((item, index) => (
+                  {(service.deliverables || service.features || []).map((item, index) => (
                     <div key={index} className="flex items-start space-x-3 group">
                       <div className="bg-luxury-red/10 rounded-full p-1 flex-shrink-0 mt-1 group-hover:bg-luxury-red group-hover:text-white transition-colors duration-300">
                         <Check className="h-4 w-4 text-luxury-red group-hover:text-white" />
@@ -375,6 +417,27 @@ export default function ServicePage() {
           </div>
         </div>
       </section>
+
+      {/* Success Modal */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-luxury-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center transform animate-in zoom-in-95 duration-300">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="h-10 w-10 text-green-600" />
+            </div>
+            <h3 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">Inquiry Received</h3>
+            <p className="text-luxury-black/60 font-luxury tracking-wide mb-8">
+              Thank you for contacting Skyriting. Our aviation experts will get back to you within 24 hours.
+            </p>
+            <button
+              onClick={() => setShowSuccess(false)}
+              className="w-full bg-luxury-red text-white py-4 rounded-xl font-luxury tracking-widest uppercase text-sm hover:bg-luxury-red-dark transition-colors shadow-lg"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

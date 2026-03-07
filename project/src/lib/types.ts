@@ -4,16 +4,41 @@ export interface Aircraft {
   _id?: string;
   id?: string;
   name: string;
+  tailNumber?: string;
   category: string;
+  type?: string;
   manufacturer: string;
+  model?: string;
   hourly_rate: number;
+  currency?: string;
+  commissionPercentage?: number;
   passenger_capacity: number;
   range_km: number;
   cruise_speed: number;
   image_url?: string | null;
+  images?: string[];
   description?: string | null;
+  specs?: {
+    seats?: number;
+    passenger_capacity?: number;
+    speed?: number;
+    cruise_speed?: number;
+    range_km?: number;
+    base?: string;
+    pilots?: number;
+    yearOfManufacture?: number;
+    flightAttendant?: boolean;
+    baggage?: string;
+    baggageCapacity?: string;
+    cabinHeight?: string;
+    cabinWidth?: string;
+    cabinLength?: string;
+    lavatory?: number;
+    flyingRange?: string;
+  };
   amenities?: string[];
   available?: boolean;
+  isActive?: boolean;
   created_at?: string;
 }
 

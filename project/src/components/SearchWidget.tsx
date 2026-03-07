@@ -435,7 +435,7 @@ export default function SearchWidget() {
                         value={leg.departureDate}
                         onChange={e => handleLegChange(index, 'departureDate', e.target.value)}
                         min={index > 0 ? legs[index - 1]?.departureDate || today : today}
-                        className="w-full pl-8 pr-2 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
+                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
                         required
                       />
                     </div>
@@ -445,12 +445,12 @@ export default function SearchWidget() {
                   <div className="col-span-3 sm:col-span-1">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Time</label>
                     <div className="relative">
-                      <Clock className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
                       <input
                         type="time"
                         value={leg.departureTime}
                         onChange={e => handleLegChange(index, 'departureTime', e.target.value)}
-                        className="w-full pl-7 pr-1 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white"
+                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white"
                         required
                       />
                     </div>
@@ -459,16 +459,17 @@ export default function SearchWidget() {
                   <div className="col-span-3 sm:col-span-1">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Pax</label>
                     <div className="relative">
-                      <Users className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                      <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
                       <select
                         value={leg.paxCount}
                         onChange={e => handleLegChange(index, 'paxCount', parseInt(e.target.value))}
-                        className="w-full pl-7 pr-1 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
+                        className="w-full pl-10 pr-6 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
                       >
                         {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
                           <option key={n} value={n}>{n}</option>
                         ))}
                       </select>
+                      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
                 </div>

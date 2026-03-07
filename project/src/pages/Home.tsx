@@ -39,13 +39,13 @@ const FEATURES = [
 ];
 
 const AIRCRAFT_TYPES = [
-  { type: 'Helicopter', img: 'https://images.unsplash.com/photo-1589519160732-57fc498494f8?w=600&h=400&fit=crop&q=80', link: '/helicopter' },
+  { type: 'Helicopter', img: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop&q=80', link: '/helicopter' },
   { type: 'Airliner', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Airliner' },
   { type: 'Large Jet', img: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Large' },
-  { type: 'Super Mid', img: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Super Mid' },
+  { type: 'Super Mid', img: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Super Mid' },
   { type: 'Midsize', img: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Mid' },
   { type: 'Light Jet', img: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Light' },
-  { type: 'Turboprop', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Turboprop' },
+  { type: 'Turboprop', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Turboprop' },
 ];
 
 export default function Home() {
@@ -96,8 +96,12 @@ export default function Home() {
             <span className="text-white/90 text-xs tracking-widest uppercase font-medium">India's Premium Private Aviation</span>
           </div>
 
-         
-
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-light text-white tracking-tight mb-4 leading-tight animate-fade-in text-center">
+            Your Ultimate Private <br className="hidden sm:block" /> Aviation Partner
+          </h1>
+          <p className="text-sm sm:text-lg md:text-xl text-white/70 max-w-xl mb-6 font-light tracking-wide animate-fade-in-delayed text-center">
+            Experience bespoke luxury travel with our curated fleet of private jets and helicopters.
+          </p>
           {/* Search Widget */}
           <div className="w-full max-w-4xl mt-8">
             <SearchWidget />

@@ -203,7 +203,7 @@ export default function Navigation() {
                         Skyriting Wed
                       </Link>
                       <Link to="/packages/skyriting-rescue" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
-                        Skyriting Rescus
+                        Skyriting Rescue
                       </Link>
                     </>
                   )}
@@ -459,7 +459,7 @@ export default function Navigation() {
                           onClick={() => setIsOpen(false)}
                           className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
-                          Skyriting Rescus
+                          Skyriting Rescue
                         </Link>
                       </>
                     )}
