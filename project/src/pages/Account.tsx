@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Calendar, User, Mail, MapPin, Plane, Clock, CheckCircle, XCircle, FileText, RefreshCw, LogOut, Camera, AlertCircle, X } from 'lucide-react';
 import PhoneInput from '../components/PhoneInput';
-import { getUserBookings, getUserQuotes, getUserProfile, updateUserProfile, resendVerification } from '../lib/api';
+import { getUserBookings, getUserQuotes, getUserProfile, updateUserProfile, resendVerification, requestReschedule } from '../lib/api';
 import { getAuthToken, removeAuthToken } from '../lib/auth';
 
 export default function Account() {
@@ -189,7 +189,7 @@ export default function Account() {
           </div>
         </div>
       )}
-    <div className="min-h-screen pt-16 sm:pt-20 bg-luxury-white">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-luxury-white">
       <section className="py-8 sm:py-12 bg-gradient-to-br from-luxury-black to-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-luxury font-light mb-4 tracking-luxury">My Skyriting Account</h1>

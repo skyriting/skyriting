@@ -399,21 +399,21 @@ export default function SearchWidget() {
                 )}
 
                 {/* Route Row */}
-                <div className="grid grid-cols-12 gap-2">
+                <div className="flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-4">
                   {/* From */}
-                  <div className="col-span-12 md:col-span-3">
+                  <div className="w-full md:col-span-3">
                     <label className="block text-xs font-medium text-gray-500 mb-1">From</label>
                     <CityDropdown
                       value={leg.origin}
                       onChange={city => handleLegChange(index, 'origin', city)}
                       cities={originCities}
                       placeholder="Departure city"
-                      icon={<MapPin className="h-3.5 w-3.5" />}
+                      icon={<MapPin className="h-4 w-4" />}
                     />
                   </div>
 
                   {/* To */}
-                  <div className="col-span-12 md:col-span-3">
+                  <div className="w-full md:col-span-3">
                     <label className="block text-xs font-medium text-gray-500 mb-1">To</label>
                     <CityDropdown
                       value={leg.destination}
@@ -421,55 +421,57 @@ export default function SearchWidget() {
                       cities={index === 0 ? originCities : originCities}
                       placeholder="Arrival city"
                       disabled={index === 0 ? !leg.origin : (tripType === 'round_trip' && index === 1)}
-                      icon={<MapPin className="h-3.5 w-3.5" />}
+                      icon={<MapPin className="h-4 w-4" />}
                     />
                   </div>
 
                   {/* Date */}
-                  <div className="col-span-12 sm:col-span-4 md:col-span-2">
+                  <div className="w-full md:col-span-2">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
                     <div className="relative">
-                      <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+                      <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                       <input
                         type="date"
                         value={leg.departureDate}
                         onChange={e => handleLegChange(index, 'departureDate', e.target.value)}
                         min={index > 0 ? legs[index - 1]?.departureDate || today : today}
-                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
+                        className="w-full pl-10 pr-2 py-3 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
                         required
                       />
                     </div>
                   </div>
 
                   {/* Time + Pax */}
-                  <div className="col-span-6 sm:col-span-4 md:col-span-2">
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Time</label>
-                    <div className="relative">
-                      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
-                      <input
-                        type="time"
-                        value={leg.departureTime}
-                        onChange={e => handleLegChange(index, 'departureTime', e.target.value)}
-                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white"
-                        required
-                      />
+                  <div className="flex gap-3 w-full md:col-span-4 md:grid md:grid-cols-2 md:gap-4">
+                    <div className="flex-1 md:w-full">
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Time</label>
+                      <div className="relative">
+                        <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <input
+                          type="time"
+                          value={leg.departureTime}
+                          onChange={e => handleLegChange(index, 'departureTime', e.target.value)}
+                          className="w-full pl-10 pr-2 py-3 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white"
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="col-span-6 sm:col-span-4 md:col-span-2">
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Pax</label>
-                    <div className="relative">
-                      <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
-                      <select
-                        value={leg.paxCount}
-                        onChange={e => handleLegChange(index, 'paxCount', parseInt(e.target.value))}
-                        className="w-full pl-10 pr-6 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
-                      >
-                        {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
-                          <option key={n} value={n}>{n}</option>
-                        ))}
-                      </select>
-                      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
+                    <div className="flex-1 md:w-full">
+                      <label className="block text-xs font-medium text-gray-500 mb-1">Pax</label>
+                      <div className="relative">
+                        <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <select
+                          value={leg.paxCount}
+                          onChange={e => handleLegChange(index, 'paxCount', parseInt(e.target.value))}
+                          className="w-full pl-10 pr-6 py-3 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
+                        >
+                          {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
+                            <option key={n} value={n}>{n}</option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                      </div>
                     </div>
                   </div>
                 </div>

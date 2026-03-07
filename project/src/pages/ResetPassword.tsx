@@ -34,7 +34,7 @@ export default function ResetPassword() {
     try {
       await resetPassword(token, formData.password);
       setSuccess(true);
-      setTimeout(() => navigate('/login'), 3000);
+      setTimeout(() => navigate('/login'), 1500);
     } catch (err: any) {
       setError(err.message || 'Failed to reset password. The link may have expired.');
     } finally {
@@ -43,7 +43,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen pt-24 sm:pt-28 bg-gradient-to-br from-slate-900 via-slate-800 to-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-600/10 rounded-full blur-3xl"></div>

@@ -38,7 +38,7 @@ export default function HelicopterBooking() {
       setSuccess(true);
       setTimeout(() => {
         navigate('/');
-      }, 3000);
+      }, 1500);
     } catch (err: any) {
       setError(err.message || 'Failed to submit booking request');
     } finally {

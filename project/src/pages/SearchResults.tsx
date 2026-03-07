@@ -95,7 +95,7 @@ export default function SearchResults() {
           {/* Filters Sidebar */}
           {showFilters && (
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24 border border-luxury-black/5">
+              <div className="bg-white rounded-xl shadow-lg p-6 sticky top-28 border border-luxury-black/5">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-luxury font-light text-luxury-black flex items-center tracking-luxury">
                     <Filter className="h-5 w-5 mr-2 text-luxury-red" />
