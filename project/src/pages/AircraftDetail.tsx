@@ -24,12 +24,11 @@ export default function AircraftDetail() {
   const location = useLocation();
   const [aircraft, setAircraft] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
   const locationState = location.state as any; // Search results data with pricing
   const searchData = locationState?.searchData || locationState;
   const pricing = locationState?.pricing;
   const legs = locationState?.legs || searchData?.legs;
-  const tripType = locationState?.tripType || searchData?.tripType;
 
   useEffect(() => {
     if (id) {
@@ -196,7 +195,7 @@ export default function AircraftDetail() {
                   <div
                     key={index}
                     className="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg border border-luxury-black/10"
-                    onClick={() => setSelectedImageIndex(index)}
+                    onClick={() => {}} // No-op since we're not using index for now
                   >
                     <img
                       src={photo}
@@ -404,17 +403,15 @@ export default function AircraftDetail() {
             </div>
           )}
 
-          {/* Enquiry Form (if from search) */}
-          {pricing && (
-            <div className="mb-8 sm:mb-12">
-              <EnquiryForm
-                aircraftId={aircraft._id || aircraft.id}
-                aircraftName={aircraft.name}
-                price={pricing.totalCost}
-                currency={pricing.currency || 'INR'}
-              />
-            </div>
-          )}
+          {/* Enquiry Form */}
+          <div id="booking-section" className="mb-8 sm:mb-12 scroll-mt-24">
+            <EnquiryForm
+              aircraftId={aircraft._id || aircraft.id}
+              aircraftName={aircraft.name}
+              price={pricing?.totalCost}
+              currency={pricing?.currency || 'INR'}
+            />
+          </div>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
@@ -425,13 +422,18 @@ export default function AircraftDetail() {
               <ArrowLeft className="h-5 w-5" />
               <span>{legs && pricing ? 'Back to Search' : 'Back to Fleet'}</span>
             </button>
-            <a
-              href="mailto:info@skyriting.com?subject=Booking Request for ${aircraft.name}"
-              className="flex items-center justify-center space-x-2 px-6 sm:px-8 py-3 sm:py-4 bg-luxury-red text-white rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
+            <button
+              onClick={() => {
+                const element = document.getElementById('booking-section');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="flex items-center justify-center space-x-2 px-6 sm:px-8 py-3 sm:py-4 bg-luxury-red text-white rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg group"
             >
               <span>Book This Aircraft</span>
-              <Plane className="h-5 w-5" />
-            </a>
+              <Plane className="h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </button>
           </div>
         </div>
       </section>

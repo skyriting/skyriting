@@ -126,11 +126,11 @@ export default function SearchWidget() {
     fullName: '',
     email: '',
     phone: '',
-    countryCode: '+91',
+    countryCode: '+1',
     message: '',
   });
   const [submitting, setSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
@@ -232,7 +232,7 @@ export default function SearchWidget() {
     setSubmitting(true);
     try {
       await createHelicopterInquiry({ ...helicopterForm, phone: `${helicopterForm.countryCode} ${helicopterForm.phone}` });
-      setSubmitSuccess(true);
+      setShowSuccessModal(true);
       setHelicopterForm({ fullName: '', email: '', phone: '', countryCode: '+91', message: '' });
     } catch (error: any) {
       alert(error.message || 'Failed to submit. Please try again.');
@@ -245,6 +245,12 @@ export default function SearchWidget() {
 
   return (
     <div className="w-full mx-auto">
+      <SuccessModal 
+        isOpen={showSuccessModal} 
+        onClose={() => setShowSuccessModal(false)}
+        title="Request Received!"
+        message="Thank you for your interest. Our team will contact you shortly to confirm your charter details."
+      />
       {/* Aircraft Type Selector */}
       <div className="flex mb-3">
         {(['jet', 'helicopter'] as const).map(type => (
@@ -267,12 +273,6 @@ export default function SearchWidget() {
       {aircraftType === 'helicopter' ? (
         // Helicopter Form
         <div className="bg-white/95 backdrop-blur rounded-2xl p-6 shadow-2xl border border-white/20">
-          <SuccessModal 
-            isOpen={submitSuccess}
-            onClose={() => setSubmitSuccess(false)}
-            title="Helicopter Inquiry Sent!"
-            message="Your request has been received. Our dedicated helicopter concierge team will contact you shortly to confirm details."
-          />
           <div className="mb-6 flex justify-between items-start">
             <div>
               <h3 className="text-gray-900 text-lg font-light tracking-tight mb-1">Helicopter Charter</h3>
@@ -401,7 +401,7 @@ export default function SearchWidget() {
                 {/* Route Row */}
                 <div className="grid grid-cols-12 gap-2">
                   {/* From */}
-                  <div className="col-span-12 sm:col-span-4">
+                  <div className="col-span-12 md:col-span-3">
                     <label className="block text-xs font-medium text-gray-500 mb-1">From</label>
                     <CityDropdown
                       value={leg.origin}
@@ -413,12 +413,12 @@ export default function SearchWidget() {
                   </div>
 
                   {/* To */}
-                  <div className="col-span-12 sm:col-span-4">
+                  <div className="col-span-12 md:col-span-3">
                     <label className="block text-xs font-medium text-gray-500 mb-1">To</label>
                     <CityDropdown
                       value={leg.destination}
                       onChange={city => handleLegChange(index, 'destination', city)}
-                      cities={index === 0 ? destinationCities : originCities}
+                      cities={index === 0 ? originCities : originCities}
                       placeholder="Arrival city"
                       disabled={index === 0 ? !leg.origin : (tripType === 'round_trip' && index === 1)}
                       icon={<MapPin className="h-3.5 w-3.5" />}
@@ -426,7 +426,7 @@ export default function SearchWidget() {
                   </div>
 
                   {/* Date */}
-                  <div className="col-span-6 sm:col-span-2">
+                  <div className="col-span-12 sm:col-span-4 md:col-span-2">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Date</label>
                     <div className="relative">
                       <Calendar className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
@@ -435,14 +435,14 @@ export default function SearchWidget() {
                         value={leg.departureDate}
                         onChange={e => handleLegChange(index, 'departureDate', e.target.value)}
                         min={index > 0 ? legs[index - 1]?.departureDate || today : today}
-                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
+                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white cursor-pointer"
                         required
                       />
                     </div>
                   </div>
 
                   {/* Time + Pax */}
-                  <div className="col-span-3 sm:col-span-1">
+                  <div className="col-span-6 sm:col-span-4 md:col-span-2">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Time</label>
                     <div className="relative">
                       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
@@ -450,20 +450,20 @@ export default function SearchWidget() {
                         type="time"
                         value={leg.departureTime}
                         onChange={e => handleLegChange(index, 'departureTime', e.target.value)}
-                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white"
+                        className="w-full pl-10 pr-2 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white"
                         required
                       />
                     </div>
                   </div>
 
-                  <div className="col-span-3 sm:col-span-1">
+                  <div className="col-span-6 sm:col-span-4 md:col-span-2">
                     <label className="block text-xs font-medium text-gray-500 mb-1">Pax</label>
                     <div className="relative">
                       <Users className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
                       <select
                         value={leg.paxCount}
                         onChange={e => handleLegChange(index, 'paxCount', parseInt(e.target.value))}
-                        className="w-full pl-10 pr-6 py-2.5 border border-gray-200 rounded-lg text-xs focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
+                        className="w-full pl-10 pr-6 py-2.5 border border-gray-200 rounded-lg text-sm focus:border-red-400 focus:outline-none text-gray-800 bg-white appearance-none cursor-pointer"
                       >
                         {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
                           <option key={n} value={n}>{n}</option>
