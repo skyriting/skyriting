@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plane, Plus, Edit2, Trash2, ArrowLeft, Save, X } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
+import SuccessModal from '../../components/SuccessModal';
 
 function AdminFleetContent() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function AdminFleetContent() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingAircraft, setEditingAircraft] = useState<any>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -151,7 +153,7 @@ function AdminFleetContent() {
       setShowForm(false);
       setEditingAircraft(null);
       resetForm();
-      alert('Aircraft saved successfully!');
+      setShowSuccess(true);
       fetchAircraft();
     } catch (error: any) {
       console.error('Error saving aircraft:', error);
@@ -298,6 +300,12 @@ function AdminFleetContent() {
 
   return (
     <div className="min-h-screen bg-gray-50 pt-44">
+      <SuccessModal 
+        isOpen={showSuccess} 
+        onClose={() => setShowSuccess(false)}
+        title="Aircraft Saved!"
+        message="The aircraft details have been updated successfully in the system."
+      />
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
