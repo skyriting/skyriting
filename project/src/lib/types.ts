@@ -166,6 +166,7 @@ export interface Package {
   currency?: string;
   priceNote?: string;
   dateFlexibility?: string;
+  packageTypes?: string[];
   personCapacity?: string;
   isActive?: boolean;
   showInNavigation?: boolean;

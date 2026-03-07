@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, Plus, Edit2, Trash2, ArrowLeft, Save, X, Eye } from 'lucide-react';
+import { Settings, Plus, Edit2, Trash2, ArrowLeft, Save, X } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 function AdminPricingContent() {
@@ -9,7 +9,7 @@ function AdminPricingContent() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingRule, setEditingRule] = useState<any>(null);
-  const [previewRule, setPreviewRule] = useState<any>(null);
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -241,7 +241,7 @@ function AdminPricingContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">

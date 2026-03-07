@@ -64,7 +64,7 @@ function AdminDashboardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       {/* Header */}
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -197,6 +197,24 @@ function AdminDashboardContent() {
             <Newspaper className="h-8 w-8 text-cyan-500 mb-3" />
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Articles</h3>
             <p className="text-sm text-gray-600">Manage news and media</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/career')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <Users className="h-8 w-8 text-blue-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Careers</h3>
+            <p className="text-sm text-gray-600">View career applications</p>
+          </button>
+
+          <button
+            onClick={() => navigate('/3636847rgyuvfu3f/98184t763gvf/contact')}
+            className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition text-left"
+          >
+            <MessageSquare className="h-8 w-8 text-indigo-500 mb-3" />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Manage Contacts</h3>
+            <p className="text-sm text-gray-600">View contact inquiries</p>
           </button>
 
           <button

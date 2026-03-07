@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, Plus, Edit2, Trash2, ArrowLeft, Save, X, MessageSquare, User, Mail, Phone } from 'lucide-react';
+import { Briefcase, Plus, Edit2, Trash2, ArrowLeft, Save, X, MessageSquare } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
@@ -198,7 +198,7 @@ function AdminServicesContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

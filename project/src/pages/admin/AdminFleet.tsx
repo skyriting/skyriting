@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plane, Plus, Edit2, Trash2, ArrowLeft, Save, X, Upload, Image as ImageIcon } from 'lucide-react';
+import { Plane, Plus, Edit2, Trash2, ArrowLeft, Save, X } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 function AdminFleetContent() {
@@ -282,7 +282,7 @@ function AdminFleetContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">

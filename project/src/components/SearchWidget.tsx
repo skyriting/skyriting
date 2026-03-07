@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plane, Calendar, Users, Clock, MapPin, Search, Plus, X, ChevronDown, Send } from 'lucide-react';
 import PhoneInput from './PhoneInput';
+import SuccessModal from './SuccessModal';
 import { getOriginCities, getDestinationCities, createHelicopterInquiry } from '../lib/api';
 
 interface Leg {
@@ -47,47 +48,57 @@ function CityDropdown({ value, onChange, cities, placeholder, disabled = false, 
         type="button"
         disabled={disabled}
         onClick={() => { if (!disabled) { setOpen(!open); setSearch(''); } }}
-        className={`w-full flex items-center gap-2 px-3 py-2.5 bg-white border rounded-lg text-left transition text-sm font-medium ${
+        className={`w-full flex items-center gap-2 px-3 py-3 bg-white border rounded-xl text-left transition-all duration-300 text-sm font-medium ${
           disabled
-            ? 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-60'
-            : 'border-gray-200 hover:border-red-400 focus:border-red-400 cursor-pointer'
-        } ${open ? 'border-red-400 ring-1 ring-red-400/30' : ''}`}
+            ? 'border-gray-100 bg-gray-50/50 cursor-not-allowed opacity-40'
+            : 'border-gray-200 hover:border-red-600 hover:shadow-md hover:shadow-red-600/5 focus:border-red-600 cursor-pointer shadow-sm'
+        } ${open ? 'border-red-600 ring-4 ring-red-600/5' : ''}`}
       >
-        {icon && <span className="text-gray-400 flex-shrink-0">{icon}</span>}
-        <span className={`flex-1 truncate text-xs sm:text-sm ${value ? 'text-gray-900' : 'text-gray-400'}`}>
+        {icon && <span className={`${disabled ? 'text-gray-300' : 'text-gray-400'} flex-shrink-0 transition-colors ${open ? 'text-red-600' : ''}`}>{icon}</span>}
+        <span className={`flex-1 truncate text-xs sm:text-sm tracking-wide ${value ? 'text-gray-900 font-semibold' : 'text-gray-400 font-light'}`}>
           {value || placeholder}
         </span>
-        <ChevronDown className={`h-3.5 w-3.5 text-gray-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-3.5 w-3.5 text-gray-400 flex-shrink-0 transition-all duration-300 ${open ? 'rotate-180 text-red-600 scale-110' : ''}`} />
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden" style={{ minWidth: '200px' }}>
-          <div className="p-2 border-b border-gray-100">
-            <input
-              autoFocus
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search city..."
-              className="w-full px-3 py-1.5 text-xs border border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
-              onClick={e => e.stopPropagation()}
-            />
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 z-[100] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-300" style={{ minWidth: '240px' }}>
+          <div className="p-3 border-b border-gray-50 bg-gray-50/30">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+              <input
+                autoFocus
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Where to?"
+                className="w-full pl-9 pr-3 py-2 text-xs border border-gray-100 rounded-xl focus:outline-none focus:border-red-600 bg-white transition-all font-medium tracking-wide"
+                onClick={e => e.stopPropagation()}
+              />
+            </div>
           </div>
-          <div className="max-h-48 overflow-y-auto">
+          <div className="max-h-64 overflow-y-auto py-1 scrollbar-thin scrollbar-thumb-gray-200">
             {filtered.length === 0 ? (
-              <div className="px-4 py-3 text-xs text-gray-400 text-center">No cities found</div>
+              <div className="px-5 py-8 text-center">
+                <p className="text-xs text-gray-400 font-light italic">No destinations found...</p>
+              </div>
             ) : (
               filtered.map(city => (
                 <button
                   key={city}
                   type="button"
                   onClick={() => { onChange(city); setOpen(false); setSearch(''); }}
-                  className={`w-full text-left px-4 py-2.5 text-xs hover:bg-red-50 hover:text-red-700 transition flex items-center gap-2 ${
-                    value === city ? 'bg-red-50 text-red-700 font-medium' : 'text-gray-700'
+                  className={`w-full text-left px-5 py-3 text-xs transition-colors flex items-center justify-between group ${
+                    value === city ? 'bg-red-50 text-red-700 font-bold' : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
-                  <MapPin className="h-3 w-3 flex-shrink-0" />
-                  {city}
+                  <div className="flex items-center gap-3">
+                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${value === city ? 'bg-red-100' : 'bg-gray-100 group-hover:bg-red-100'}`}>
+                      <MapPin className={`h-3 w-3 ${value === city ? 'text-red-700' : 'text-gray-400 group-hover:text-red-600'}`} />
+                    </div>
+                    <span className="tracking-wide uppercase font-semibold">{city}</span>
+                  </div>
+                  {value === city && <div className="w-1.5 h-1.5 rounded-full bg-red-600" />}
                 </button>
               ))
             )}
@@ -219,12 +230,10 @@ export default function SearchWidget() {
   const handleHelicopterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    setSubmitSuccess(false);
     try {
       await createHelicopterInquiry({ ...helicopterForm, phone: `${helicopterForm.countryCode} ${helicopterForm.phone}` });
       setSubmitSuccess(true);
       setHelicopterForm({ fullName: '', email: '', phone: '', countryCode: '+91', message: '' });
-      setTimeout(() => setSubmitSuccess(false), 5000);
     } catch (error: any) {
       alert(error.message || 'Failed to submit. Please try again.');
     } finally {
@@ -257,20 +266,22 @@ export default function SearchWidget() {
 
       {aircraftType === 'helicopter' ? (
         // Helicopter Form
-        <div className="bg-white/95 backdrop-blur rounded-2xl p-5 shadow-2xl">
-          <div className="mb-4">
-            <h3 className="text-gray-900 text-sm font-semibold mb-1">Helicopter Charter Inquiry</h3>
-            <p className="text-gray-500 text-xs">Our team will contact you within 2 hours</p>
-          </div>
-
-          {submitSuccess && (
-            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 text-xs font-medium flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-              </div>
-              Inquiry submitted! We'll contact you shortly.
+        <div className="bg-white/95 backdrop-blur rounded-2xl p-6 shadow-2xl border border-white/20">
+          <SuccessModal 
+            isOpen={submitSuccess}
+            onClose={() => setSubmitSuccess(false)}
+            title="Helicopter Inquiry Sent!"
+            message="Your request has been received. Our dedicated helicopter concierge team will contact you shortly to confirm details."
+          />
+          <div className="mb-6 flex justify-between items-start">
+            <div>
+              <h3 className="text-gray-900 text-lg font-light tracking-tight mb-1">Helicopter Charter</h3>
+              <p className="text-gray-400 text-xs font-medium tracking-widest uppercase">Elite Aerial Mobility</p>
             </div>
-          )}
+            <div className="bg-red-50 text-red-600 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
+              Priority Response
+            </div>
+          </div>
 
           <form onSubmit={handleHelicopterSubmit} className="space-y-3">
             <div className="grid grid-cols-2 gap-3">

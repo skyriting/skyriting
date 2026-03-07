@@ -195,12 +195,12 @@ export default function AboutUs() {
             Join thousands of satisfied clients who trust Skyriting for their private aviation needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:info@skyriting.com?subject=Experience the Skyriting Difference"
+            <Link
+              to="/"
               className="bg-luxury-red text-white px-8 py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg"
             >
               Book Your Flight
-            </a>
+            </Link>
             <Link
               to="/contact"
               className="bg-white text-luxury-red px-8 py-4 rounded-lg hover:bg-luxury-white-off transition font-luxury tracking-widest uppercase shadow-lg"

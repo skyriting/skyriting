@@ -60,6 +60,15 @@ export default function Navigation() {
     fetchData();
   }, []);
 
+  const getDisplayTitle = (title: string) => {
+    const t = title.toLowerCase();
+    if (t.includes('pilgrimage') || t.includes('yatra')) return 'Skyriting Yatra';
+    if (t.includes('helicopter') || t.includes('heli')) return 'Skyriting Heli';
+    if (t.includes('wedding')) return 'Skyriting Wed';
+    if (t.includes('ambulance') || t.includes('rescue')) return 'Skyriting Rescue';
+    return title;
+  };
+
   const toggleDropdown = (menu: string) => {
     setActiveDropdown(activeDropdown === menu ? null : menu);
   };
@@ -85,11 +94,6 @@ export default function Navigation() {
                 isHomePage && !isScrolled ? 'text-white' : 'text-luxury-black'
               }`}>
                 Skyriting
-              </span>
-              <span className={`text-[9px] sm:text-[10px] font-luxury tracking-widest transition-colors ${
-                isHomePage && !isScrolled ? 'text-white/80' : 'text-luxury-red'
-              }`}>
-                ELEVATE YOUR JOURNEY
               </span>
             </div>
           </Link>
@@ -184,7 +188,7 @@ export default function Navigation() {
                         onClick={() => setIsOpen(false)}
                         className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide"
                       >
-                        {pkg.title}
+                        {getDisplayTitle(pkg.title)}
                       </Link>
                     ))
                   ) : (
@@ -192,14 +196,14 @@ export default function Navigation() {
                       <Link to="/packages/skyriting-yatra" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Yatra
                       </Link>
-                      <Link to="/packages/skyriting-wed" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
-                        Skyriting Wed
-                      </Link>
                       <Link to="/packages/skyriting-heli" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
                         Skyriting Heli
                       </Link>
+                      <Link to="/packages/skyriting-wed" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
+                        Skyriting Wed
+                      </Link>
                       <Link to="/packages/skyriting-rescue" onClick={() => setIsOpen(false)} className="block px-3 py-2 text-xs text-luxury-black hover:bg-luxury-red/10 hover:text-luxury-red transition font-luxury tracking-wide">
-                        Skyriting Rescue
+                        Skyriting Rescus
                       </Link>
                     </>
                   )}
@@ -424,7 +428,7 @@ export default function Navigation() {
                           onClick={() => setIsOpen(false)}
                           className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
-                          {pkg.title}
+                          {getDisplayTitle(pkg.title)}
                         </Link>
                       ))
                     ) : (
@@ -437,13 +441,6 @@ export default function Navigation() {
                           Skyriting Yatra
                         </Link>
                         <Link 
-                          to="/packages/skyriting-wed" 
-                          onClick={() => setIsOpen(false)}
-                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
-                        >
-                          Skyriting Wed
-                        </Link>
-                        <Link 
                           to="/packages/skyriting-heli" 
                           onClick={() => setIsOpen(false)}
                           className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
@@ -451,11 +448,18 @@ export default function Navigation() {
                           Skyriting Heli
                         </Link>
                         <Link 
+                          to="/packages/skyriting-wed" 
+                          onClick={() => setIsOpen(false)}
+                          className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
+                        >
+                          Skyriting Wed
+                        </Link>
+                        <Link 
                           to="/packages/skyriting-rescue" 
                           onClick={() => setIsOpen(false)}
                           className="block px-6 py-2 text-xs text-luxury-black hover:text-luxury-red font-luxury tracking-wide"
                         >
-                          Skyriting Rescue
+                          Skyriting Rescus
                         </Link>
                       </>
                     )}

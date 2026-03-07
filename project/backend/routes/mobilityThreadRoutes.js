@@ -53,15 +53,15 @@ router.post('/', authenticateUser, async (req, res) => {
     const { content, images } = req.body;
     const user = req.user;
     
-    if (!content || content.trim().length === 0) {
-      return res.status(400).json({ error: 'Content is required' });
+    if ((!content || content.trim().length === 0) && (!images || images.length === 0)) {
+      return res.status(400).json({ error: 'Content or image is required' });
     }
     
     const post = new MobilityThreadPost({
       userId: user._id,
       userName: user.name || user.email,
       userPhoto: user.profilePhoto,
-      content: content.trim(),
+      content: content ? content.trim() : '',
       images: images || [],
     });
     

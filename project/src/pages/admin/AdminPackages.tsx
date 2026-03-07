@@ -331,6 +331,75 @@ function AdminPackagesContent() {
     setEditingPackage(null);
   };
 
+  const templates = [
+    {
+      title: 'Skyriting Yatra',
+      slug: 'skyriting-yatra',
+      tagline: 'Spiritual Journeys',
+      subtitle: 'Premium Pilgrimage Services',
+      description: 'Experience the divine with Skyriting Yatra. We provide seamless, comfortable, and luxury aviation services for your spiritual journeys across India.',
+      imageUrl: 'https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80&w=2000',
+      priceNote: 'Starting from ₹ 2,50,000/- per person',
+      packageIncludesText: 'Charter Flight\nVIP Support\nLuxury Ground Transport\nPremium Accommodation',
+      tourHighlightsText: 'Door-to-door service\nExpert guides\nFlexible scheduling\nPremium food & beverage',
+      packageTypesText: 'Standard Yatra\nPremium Yatra\nCustom Yatra',
+      durationOptionsText: 'Same Day | 1 Day | 1 | 0 | 250000 | INR | 6 | Quick spiritual visit\n2 Days 1 Night | 2 Days | 2 | 1 | 450000 | INR | 6 | Extended pilgrimage experience',
+      itineraryText: 'Day 1: Departure & Arrival\nFly from your base to the spiritual destination in luxury.\n\nDay 2: Return Journey\nComplete your darshan and fly back home.',
+    },
+    {
+      title: 'Skyriting Heli',
+      slug: 'skyriting-heli',
+      tagline: 'Heli-Experiences',
+      subtitle: 'Luxury Helicopter Services',
+      description: 'Skyriting Heli offers premium helicopter charter services for business, leisure, and emergency needs. Fast, safe, and luxurious.',
+      imageUrl: 'https://images.unsplash.com/photo-1559135197-8a45ea74d56d?auto=format&fit=crop&q=80&w=2000',
+      priceNote: 'Starting from ₹ 1,50,000/- per hour',
+      packageIncludesText: 'Bespoke Helicopter Charter\nExpert Pilot\nGround Logistics\nAerial Photography',
+      tourHighlightsText: 'Quick city transfers\nScenic tours\nPrecision landings\nModern fleet',
+      packageTypesText: 'City Transfer\nScenic Tour\nCorporate Charter',
+      durationOptionsText: 'Scenic Tour | 30 Mins | 0 | 0 | 50000 | INR | 5 | Beautiful city views\nFull Day Charter | 8 Hours | 1 | 0 | 500000 | INR | 5 | Dedicated heli for the day',
+      itineraryText: 'Day 1: Aerial Adventure\nExperience the city from above with our expert pilots.',
+    },
+    {
+       title: 'Skyriting Wed',
+       slug: 'skyriting-wed',
+       tagline: 'Wedding Charters',
+       subtitle: 'Luxury Wedding Aviation',
+       description: 'Make your special day even more memorable with Skyriting Wed. Luxury charters for the bride, groom, and family.',
+       imageUrl: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=2000',
+       priceNote: 'Custom Wedding Packages',
+       packageIncludesText: 'Groom/Bride Entry\nFlower Dropping\nFamily Charters\nPhoto Shoots',
+       tourHighlightsText: 'Red carpet entry\nPersonalized decor\nIn-flight celebrations\nMulti-city logistics',
+       packageTypesText: 'Entry Special\nTotal Wedding Charter\nPre-wedding shoot',
+       durationOptionsText: 'Entry Special | 1 Hour | 0 | 0 | 100000 | INR | 4 | Grand entry experience\nFull Day | 1 Day | 1 | 0 | 800000 | INR | 8 | Total wedding logistics',
+       itineraryText: 'Day 1: The Grand Day\nLuxury arrival at the wedding venue.',
+    },
+    {
+       title: 'Skyriting Rescue',
+       slug: 'skyriting-rescue',
+       tagline: 'Emergency Services',
+       subtitle: 'Air Ambulance & Rescue',
+       description: 'Skyriting Rescue provides critical air ambulance and medical evacuation services across India. Support when it matters most.',
+       imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000',
+       priceNote: 'Critical Care Aviation',
+       packageIncludesText: 'Fully equipped Air Ambulance\nMedical Staff\nGround Support\nFast Coordination',
+       tourHighlightsText: 'ICU on wings\nExpert medical team\n24/7 availability\nHospital-to-hospital support',
+       packageTypesText: 'Critical Care\nStabilization Transfer\nOrgan Transport',
+       durationOptionsText: 'Emergency Transfer | Custom | 0 | 0 | 0 | INR | 2 | Emergency medical evacuation',
+       itineraryText: 'Day 1: Life Saving Journey\nRapid transfer to specialized medical care.',
+    }
+  ];
+
+  const applyTemplate = (templateTitle: string) => {
+    const template = templates.find(t => t.title === templateTitle);
+    if (template) {
+      setFormData({
+        ...formData,
+        ...template
+      });
+    }
+  };
+
   if (loading && activeTab === 'packages' && !showForm) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -343,7 +412,7 @@ function AdminPackagesContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -476,9 +545,23 @@ function AdminPackagesContent() {
         ) : showForm ? (
           <div className="bg-white rounded-lg shadow p-6 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {editingPackage ? 'Edit Package' : 'Create Package'}
-              </h2>
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900">
+                  {editingPackage ? 'Edit Package' : 'Create Package'}
+                </h2>
+                {!editingPackage && (
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="text-sm text-gray-500">Apply Template:</span>
+                    <select
+                      onChange={(e) => applyTemplate(e.target.value)}
+                      className="text-sm border border-gray-300 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-red-500"
+                    >
+                      <option value="">-- Select Template --</option>
+                      {templates.map(t => <option key={t.title} value={t.title}>{t.title}</option>)}
+                    </select>
+                  </div>
+                )}
+              </div>
               <button
                 onClick={() => {
                   setShowForm(false);
@@ -552,7 +635,15 @@ function AdminPackagesContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+                <input
+                  type="text"
+                  value={formData.imageUrl}
+                  onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                  placeholder="Paste image URL here"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500 mb-2"
+                />
+                <label className="block text-sm font-medium text-gray-700 mb-1">OR Upload Image</label>
                 <input
                   type="file"
                   accept="image/*"
@@ -669,7 +760,7 @@ function AdminPackagesContent() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Itinerary</label>
-                <p className="text-xs text-gray-500 mb-2">Separate days with a blank line. First line: \"Day N: Title\" then description.</p>
+                <p className="text-xs text-gray-500 mb-2">Separate days with a blank line. First line: "Day N: Title" then description.</p>
                 <textarea
                   value={formData.itineraryText}
                   onChange={(e) => setFormData({ ...formData, itineraryText: e.target.value })}

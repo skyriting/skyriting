@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageSquare, Trash2, ArrowLeft, Eye } from 'lucide-react';
+import { MessageSquare, Trash2, ArrowLeft } from 'lucide-react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 function AdminMobilityContent() {
@@ -84,7 +84,7 @@ function AdminMobilityContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-44">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center space-x-4">

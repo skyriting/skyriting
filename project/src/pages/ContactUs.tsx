@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, CheckCircle, MessageSquare, ChevronRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, MessageSquare, ChevronRight } from 'lucide-react';
 import PhoneInput from '../components/PhoneInput';
+import SuccessModal from '../components/SuccessModal';
 import { createContactInquiry } from '../lib/api';
 
 export default function ContactUs() {
-  const [submitted, setSubmitted] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -21,11 +22,11 @@ export default function ContactUs() {
     setLoading(true);
 
     try {
-      const response = await createContactInquiry({
+      await createContactInquiry({
         ...formData,
         phone: `${formData.countryCode} ${formData.phone}`,
       });
-      setSubmitted(true);
+      setShowSuccess(true);
       setFormData({
         name: '',
         email: '',
@@ -42,34 +43,14 @@ export default function ContactUs() {
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen pt-20 flex items-center justify-center bg-luxury-white">
-        <div className="max-w-lg mx-auto px-4 text-center">
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-luxury-black/5">
-            <div className="bg-luxury-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="h-8 w-8 text-luxury-red" />
-            </div>
-            <h2 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">
-              Message Sent Successfully
-            </h2>
-            <p className="text-luxury-black/70 mb-6 leading-relaxed font-luxury tracking-wide">
-              Thank you for contacting Skyriting. Our team will get back to you within 24 hours.
-            </p>
-            <button
-              onClick={() => setSubmitted(false)}
-              className="bg-luxury-red text-white px-6 py-3 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-wide"
-            >
-              Send Another Message
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen pt-16 sm:pt-20">
+      <SuccessModal 
+        isOpen={showSuccess} 
+        onClose={() => setShowSuccess(false)}
+        title="Message Sent!"
+        message="Our team will get back to you within 24 hours. Thank you for choosing Skyriting."
+      />
       {/* Breadcrumb */}
       <section className="bg-luxury-white py-3 sm:py-4 border-b border-luxury-black/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,8 +78,8 @@ export default function ContactUs() {
       <section className="py-16 sm:py-20 lg:py-24 bg-luxury-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center">
-              <div className="bg-luxury-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center transition-all hover:shadow-xl group">
+              <div className="bg-luxury-red/10 group-hover:bg-luxury-red/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
                 <Phone className="h-8 w-8 text-luxury-red" />
               </div>
               <h3 className="text-xl font-luxury font-light text-luxury-black mb-2 tracking-luxury">
@@ -112,8 +93,8 @@ export default function ContactUs() {
               </a>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center">
-              <div className="bg-luxury-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center transition-all hover:shadow-xl group">
+              <div className="bg-luxury-red/10 group-hover:bg-luxury-red/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
                 <Mail className="h-8 w-8 text-luxury-red" />
               </div>
               <h3 className="text-xl font-luxury font-light text-luxury-black mb-2 tracking-luxury">
@@ -127,8 +108,8 @@ export default function ContactUs() {
               </a>
             </div>
 
-            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center">
-              <div className="bg-luxury-red/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white p-8 rounded-xl shadow-md border border-luxury-black/5 text-center transition-all hover:shadow-xl group">
+              <div className="bg-luxury-red/10 group-hover:bg-luxury-red/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors">
                 <MapPin className="h-8 w-8 text-luxury-red" />
               </div>
               <h3 className="text-xl font-luxury font-light text-luxury-black mb-2 tracking-luxury">
@@ -143,9 +124,9 @@ export default function ContactUs() {
       </section>
 
       {/* Contact Form */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-white">
+      <section className="py-16 sm:py-20 lg:py-24 bg-luxury-white-off/50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-luxury-white-off rounded-2xl shadow-xl p-6 sm:p-8 lg:p-10 border border-luxury-black/5">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 lg:p-10 border border-luxury-black/5">
             <div className="flex items-center space-x-3 mb-6">
               <MessageSquare className="h-6 w-6 text-luxury-red" />
               <h2 className="text-2xl sm:text-3xl font-luxury font-light text-luxury-black tracking-luxury">
@@ -159,7 +140,7 @@ export default function ContactUs() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide uppercase text-xs">
                     Full Name *
                   </label>
                   <input
@@ -167,13 +148,13 @@ export default function ContactUs() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                    className="w-full px-4 py-3 border border-luxury-black/10 bg-luxury-white-off/30 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide transition-colors"
                     placeholder="Your full name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide uppercase text-xs">
                     Email Address *
                   </label>
                   <input
@@ -181,7 +162,7 @@ export default function ContactUs() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                    className="w-full px-4 py-3 border border-luxury-black/10 bg-luxury-white-off/30 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide transition-colors"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -189,7 +170,7 @@ export default function ContactUs() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide uppercase text-xs">
                     Phone Number
                   </label>
                   <PhoneInput
@@ -202,7 +183,7 @@ export default function ContactUs() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                  <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide uppercase text-xs">
                     Subject *
                   </label>
                   <input
@@ -210,14 +191,14 @@ export default function ContactUs() {
                     required
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                    className="w-full px-4 py-3 border border-luxury-black/10 bg-luxury-white-off/30 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide transition-colors"
                     placeholder="How can we help?"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide uppercase text-xs">
                   Message *
                 </label>
                 <textarea
@@ -225,7 +206,7 @@ export default function ContactUs() {
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide resize-none"
+                  className="w-full px-4 py-3 border border-luxury-black/10 bg-luxury-white-off/30 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide resize-none transition-colors"
                   placeholder="Tell us about your requirements..."
                 ></textarea>
               </div>
@@ -233,10 +214,13 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+                className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition-all font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50 hover:shadow-red-600/20 active:scale-[0.98]"
               >
                 {loading ? (
-                  <span>Sending...</span>
+                  <div className="flex items-center space-x-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
+                    <span>Sending...</span>
+                  </div>
                 ) : (
                   <>
                     <Send className="h-5 w-5" />

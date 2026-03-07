@@ -31,6 +31,7 @@ export default function ServiceContactForm({ serviceName, onCancel }: ServiceCon
         serviceName,
         subject: `Inquiry about ${serviceName}`,
       });
+      alert(`Thank you for your interest in ${serviceName}! Our team will contact you shortly.`);
       setSubmitted(true);
       setFormData({
         name: '',
@@ -49,24 +50,10 @@ export default function ServiceContactForm({ serviceName, onCancel }: ServiceCon
   };
 
   if (submitted) {
-    return (
-      <div className="bg-luxury-red/10 border border-luxury-red/20 rounded-lg p-6 text-center">
-        <p className="text-luxury-red font-luxury tracking-wide mb-4">
-          Thank you for your interest in {serviceName}!
-        </p>
-        <p className="text-luxury-black/70 font-luxury tracking-wide text-sm mb-4">
-          Our team will contact you shortly with more information.
-        </p>
-        {onCancel && (
-          <button
-            onClick={onCancel}
-            className="text-luxury-red hover:text-luxury-red/80 font-luxury tracking-wide text-sm"
-          >
-            Close
-          </button>
-        )}
-      </div>
-    );
+    setTimeout(() => {
+      setSubmitted(false);
+      if (onCancel) onCancel();
+    }, 2000);
   }
 
   return (

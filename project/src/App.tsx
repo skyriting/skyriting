@@ -25,6 +25,8 @@ import AdminBookings from './pages/admin/AdminBookings';
 import AdminArticles from './pages/admin/AdminArticles';
 import AdminServices from './pages/admin/AdminServices';
 import AdminMobility from './pages/admin/AdminMobility';
+import AdminCareer from './pages/admin/AdminCareer';
+import AdminContact from './pages/admin/AdminContact';
 import AboutUs from './pages/AboutUs';
 import Career from './pages/Career';
 import ContactUs from './pages/ContactUs';
@@ -71,6 +73,8 @@ function App() {
             <Route path="/3636847rgyuvfu3f/98184t763gvf/articles" element={<ProtectedRoute admin={true}><AdminArticles /></ProtectedRoute>} />
             <Route path="/3636847rgyuvfu3f/98184t763gvf/services" element={<ProtectedRoute admin={true}><AdminServices /></ProtectedRoute>} />
             <Route path="/3636847rgyuvfu3f/98184t763gvf/mobility" element={<ProtectedRoute admin={true}><AdminMobility /></ProtectedRoute>} />
+            <Route path="/3636847rgyuvfu3f/98184t763gvf/career" element={<ProtectedRoute admin={true}><AdminCareer /></ProtectedRoute>} />
+            <Route path="/3636847rgyuvfu3f/98184t763gvf/contact" element={<ProtectedRoute admin={true}><AdminContact /></ProtectedRoute>} />
             <Route path="/packages" element={<Packages />} />
             <Route path="/packages/:slug" element={<PackageDetail />} />
             <Route path="/packages/:packageType" element={<PackagePage />} />

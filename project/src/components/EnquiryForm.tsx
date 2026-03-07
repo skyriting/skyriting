@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, User, MessageSquare, Send } from 'lucide-react';
 import PhoneInput from './PhoneInput';
+import SuccessModal from './SuccessModal';
 import { createEnquiry } from '../lib/api';
 
 interface EnquiryFormProps {
@@ -19,7 +20,7 @@ export default function EnquiryForm({ aircraftId, aircraftName, price, currency 
     message: '',
   });
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,11 +42,8 @@ export default function EnquiryForm({ aircraftId, aircraftName, price, currency 
       };
 
       await createEnquiry(enquiryData);
-      setSubmitted(true);
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({ customer_name: '', customer_email: '', customer_phone: '', countryCode: '+91', message: '' });
-      }, 3000);
+      setShowSuccessModal(true);
+      setFormData({ customer_name: '', customer_email: '', customer_phone: '', countryCode: '+91', message: '' });
     } catch (err: any) {
       setError(err.message || 'Failed to submit enquiry. Please try again.');
     } finally {
@@ -53,22 +51,14 @@ export default function EnquiryForm({ aircraftId, aircraftName, price, currency 
     }
   };
 
-  if (submitted) {
-    return (
-      <div className="bg-luxury-red/10 border border-luxury-red/20 rounded-lg p-6 text-center">
-        <div className="bg-luxury-red/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-          <Send className="h-8 w-8 text-luxury-red" />
-        </div>
-        <h3 className="text-lg font-luxury font-light text-luxury-black mb-2 tracking-luxury">Enquiry Sent!</h3>
-        <p className="text-sm text-luxury-black/70 font-luxury tracking-wide">
-          We've received your enquiry. Our team will contact you shortly to discuss your requirements.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-luxury-white-off rounded-lg p-6 border border-luxury-black/10">
+      <SuccessModal 
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Enquiry Sent Successfully!"
+        message="We've received your enquiry. Our team will contact you shortly to discuss your flight requirements."
+      />
       <h3 className="text-xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">Send Enquiry</h3>
       <p className="text-sm text-luxury-black/70 mb-4 font-luxury tracking-wide">
         Interested in this aircraft? Send us your details and we'll contact you to make a deal.
