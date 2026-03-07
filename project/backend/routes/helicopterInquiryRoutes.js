@@ -1,6 +1,8 @@
 import express from 'express';
 import { sendAdminNotification } from '../utils/emailService.js';
 
+import Inquiry from '../models/Inquiry.js';
+
 const router = express.Router();
 
 // Create helicopter inquiry
@@ -11,6 +13,21 @@ router.post('/', async (req, res) => {
     if (!fullName || !email) {
       return res.status(400).json({ error: 'Full name and email are required' });
     }
+
+    const inquiry = new Inquiry({
+      customer_name: fullName,
+      customer_email: email,
+      customer_phone: phone || 'N/A',
+      message: `${message || 'No message provided.'}\n\nCountry: ${country || 'India'}`,
+      enquiry_type: 'helicopter',
+      aircraft_type: 'Helicopter',
+      trip_type: 'one-way',
+      passenger_count: 1,
+      departure_city: 'N/A',
+      arrival_city: 'N/A',
+    });
+    
+    await inquiry.save();
 
     const inquiryData = {
       fullName,

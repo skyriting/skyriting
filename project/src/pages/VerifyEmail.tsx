@@ -71,13 +71,6 @@ export default function VerifyEmail() {
       </div>
 
       <div className="max-w-md w-full relative z-10">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-block">
-            <img src="/images/her_o.png" alt="Skyriting" className="h-12 object-contain filter brightness-0 invert opacity-90 mx-auto" />
-          </Link>
-        </div>
-
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl text-center">
           {/* Verifying */}
           {status === 'verifying' && (

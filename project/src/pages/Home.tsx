@@ -5,13 +5,6 @@ import SearchWidget from '../components/SearchWidget';
 import { getPackages } from '../lib/api';
 import type { Package } from '../lib/types';
 
-const STATS = [
-  { value: '10,000+', label: 'Flight Hours', icon: Clock },
-  { value: '500+', label: 'Aircraft Fleet', icon: Plane },
-  { value: '50+', label: 'Destinations', icon: Globe },
-  { value: '99.8%', label: 'Safety Record', icon: Shield },
-];
-
 const FEATURES = [
   {
     icon: Plane,
@@ -57,7 +50,6 @@ const AIRCRAFT_TYPES = [
 
 export default function Home() {
   const [packages, setPackages] = useState<Package[]>([]);
-  const [currentStat, setCurrentStat] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,13 +67,6 @@ export default function Home() {
       } catch {}
     };
     fetchPackages();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStat(prev => (prev + 1) % STATS.length);
-    }, 2500);
-    return () => clearInterval(interval);
   }, []);
 
   const FALLBACK_PACKAGES = [
@@ -112,27 +97,15 @@ export default function Home() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white text-center tracking-tight mb-4 leading-none">
-            <span className="block">Elevate</span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600">Your Journey</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white text-center tracking-tight mb-4 leading-snug max-w-4xl">
+            Charter private jets and helicopters across India. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 font-medium whitespace-nowrap">Fast, safe, luxurious</span>
+             — your sky, your schedule.
           </h1>
-          <p className="text-white/70 text-sm sm:text-base md:text-lg text-center max-w-xl mb-10 leading-relaxed">
-            Charter private jets and helicopters across India. Fast, safe, luxurious — your sky, your schedule.
-          </p>
 
           {/* Search Widget */}
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl mt-8">
             <SearchWidget />
-          </div>
-
-          {/* Quick stats bar */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-            {STATS.map((stat, i) => (
-              <div key={i} className="text-center">
-                <div className="text-white text-lg sm:text-2xl font-light">{stat.value}</div>
-                <div className="text-white/50 text-xs tracking-widest uppercase">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -323,7 +296,7 @@ export default function Home() {
                     <Shield className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-gray-900 font-semibold text-sm">99.8% Safety Record</p>
+                    <p className="text-gray-900 font-semibold text-sm">Uncompromised Safety</p>
                     <p className="text-gray-500 text-xs">DGCA Certified Operations</p>
                   </div>
                 </div>

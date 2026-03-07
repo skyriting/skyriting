@@ -96,15 +96,10 @@ export default function Register() {
       </div>
 
       <div className="max-w-md w-full relative z-10">
-        {/* Logo & Header */}
+        {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block group">
-            <div className="flex items-center justify-center mb-4">
-              <img src="/images/her_o.png" alt="Skyriting" className="h-12 object-contain filter brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </Link>
           <h1 className="text-2xl sm:text-3xl font-light text-white tracking-widest uppercase mb-2">
-            Join Skyriting
+            Create Account
           </h1>
           <p className="text-white/50 text-sm tracking-wide">Create your premium aviation account</p>
         </div>

@@ -80,8 +80,8 @@ export default function PackageDetail() {
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-luxury-red mx-auto mb-4"></div>
-          <p className="text-luxury-black/70 font-luxury tracking-wide">Loading package...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p className="text-gray-500  tracking-wide">Loading package...</p>
         </div>
       </div>
     );
@@ -91,8 +91,8 @@ export default function PackageDetail() {
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">Package Not Found</h2>
-          <Link to="/packages" className="text-luxury-red hover:text-luxury-red/80 font-luxury tracking-wide">
+          <h2 className="text-2xl font-light text-gray-900 mb-4 tracking-tight">Package Not Found</h2>
+          <Link to="/packages" className="text-red-600 hover:text-red-500  tracking-wide">
             View All Packages
           </Link>
         </div>
@@ -103,14 +103,14 @@ export default function PackageDetail() {
   return (
     <div className="min-h-screen pt-16 sm:pt-20">
       {/* Breadcrumb */}
-      <section className="bg-luxury-white py-4 border-b border-luxury-black/10">
+      <section className="bg-[#FAFAFA] py-4 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center space-x-2 text-sm font-luxury tracking-wide text-luxury-black/70">
-            <Link to="/" className="hover:text-luxury-red transition">Home</Link>
+          <nav className="flex items-center space-x-2 text-sm  tracking-wide text-gray-500">
+            <Link to="/" className="hover:text-red-600 transition">Home</Link>
             <ChevronRight className="h-4 w-4" />
-            <Link to="/packages" className="hover:text-luxury-red transition">Our Packages</Link>
+            <Link to="/packages" className="hover:text-red-600 transition">Our Packages</Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-luxury-black">{packageData.title}</span>
+            <span className="text-gray-900">{packageData.title}</span>
           </nav>
         </div>
       </section>
@@ -118,15 +118,15 @@ export default function PackageDetail() {
       {/* Hero Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-luxury-black to-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-luxury font-light mb-4 tracking-luxury">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 tracking-tight">
             {packageData.title}
           </h1>
           {packageData.subtitle && (
-            <p className="text-xl sm:text-2xl text-white/80 mb-4 font-luxury tracking-wide">
+            <p className="text-xl sm:text-2xl text-white/80 mb-4  tracking-wide">
               {packageData.subtitle}
             </p>
           )}
-          <p className="text-base sm:text-lg text-white/70 max-w-3xl leading-relaxed font-luxury tracking-wide">
+          <p className="text-base sm:text-lg text-white/70 max-w-3xl leading-relaxed  tracking-wide">
             {packageData.description}
           </p>
         </div>
@@ -146,15 +146,15 @@ export default function PackageDetail() {
       )}
 
       {/* Package Details */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-luxury-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-[#FAFAFA]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Duration Options */}
               {packageData.durationOptions && packageData.durationOptions.length > 0 && (
-                <div className="bg-white p-6 rounded-xl shadow-md border border-luxury-black/10">
-                  <h2 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                  <h2 className="text-2xl font-light text-gray-900 mb-4 tracking-tight">
                     Packages:
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -166,22 +166,22 @@ export default function PackageDetail() {
                         ? `${option.days} Days / ${option.nights} Nights`
                         : option.duration || '';
                       return (
-                        <div key={index} className="text-center p-4 bg-luxury-white-off rounded-lg border border-luxury-black/5 hover:border-luxury-red transition">
-                          <p className="text-lg font-luxury font-light text-luxury-black mb-1 tracking-luxury">
+                        <div key={index} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-50 hover:border-red-600 transition">
+                          <p className="text-lg font-light text-gray-900 mb-1 tracking-tight">
                             {option.name}
                           </p>
                           {daysNights && (
-                            <p className="text-sm text-luxury-black/70 font-luxury tracking-wide mb-2">
+                            <p className="text-sm text-gray-500  tracking-wide mb-2">
                               {daysNights}
                             </p>
                           )}
                           {price && (
-                            <p className="text-base font-luxury font-medium text-luxury-red tracking-luxury">
+                            <p className="text-base font-medium text-red-600 tracking-tight">
                               {currencySymbol} {new Intl.NumberFormat('en-IN').format(price)}/seat
                             </p>
                           )}
                           {option.description && (
-                            <p className="text-xs text-luxury-black/60 font-luxury tracking-wide mt-2">
+                            <p className="text-xs text-gray-400  tracking-wide mt-2">
                               {option.description}
                             </p>
                           )}
@@ -194,15 +194,15 @@ export default function PackageDetail() {
 
               {/* Tour Highlights */}
               {packageData.tourHighlights && packageData.tourHighlights.length > 0 && (
-                <div className="bg-white p-6 rounded-xl shadow-md border border-luxury-black/10">
-                  <h2 className="text-2xl font-luxury font-light text-luxury-black mb-6 tracking-luxury">
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                  <h2 className="text-2xl font-light text-gray-900 mb-6 tracking-tight">
                     Tour Highlights
                   </h2>
                   <div className="space-y-4">
                     {packageData.tourHighlights.map((highlight, index) => (
                       <div key={index} className="flex items-start space-x-3">
-                        <Calendar className="h-5 w-5 text-luxury-red mt-1 flex-shrink-0" />
-                        <p className="text-luxury-black/70 font-luxury tracking-wide">
+                        <Calendar className="h-5 w-5 text-red-600 mt-1 flex-shrink-0" />
+                        <p className="text-gray-500  tracking-wide">
                           {highlight.text}
                         </p>
                       </div>
@@ -213,36 +213,36 @@ export default function PackageDetail() {
 
               {/* Itinerary */}
               {packageData.itinerary && packageData.itinerary.length > 0 && (
-                <div className="bg-white p-6 rounded-xl shadow-md border border-luxury-black/10">
-                  <h2 className="text-2xl font-luxury font-light text-luxury-black mb-6 tracking-luxury">
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                  <h2 className="text-2xl font-light text-gray-900 mb-6 tracking-tight">
                     Itinerary
                   </h2>
                   <div className="space-y-6">
                     {packageData.itinerary.map((day, index) => (
-                      <div key={index} className="border-l-2 border-luxury-red pl-6 pb-6 last:pb-0">
-                        <h3 className="text-xl font-luxury font-light text-luxury-black mb-3 tracking-luxury">
+                      <div key={index} className="border-l-2 border-red-600 pl-6 pb-6 last:pb-0">
+                        <h3 className="text-xl font-light text-gray-900 mb-3 tracking-tight">
                           {day.title}
                         </h3>
-                        <p className="text-luxury-black/70 leading-relaxed font-luxury tracking-wide mb-3">
+                        <p className="text-gray-500 leading-relaxed  tracking-wide mb-3">
                           {day.description}
                         </p>
                         {day.accommodation && (
                           <div className="mb-2">
-                            <span className="text-sm font-luxury font-medium text-luxury-black tracking-wide">Accommodation: </span>
-                            <span className="text-sm text-luxury-black/70 font-luxury tracking-wide">{day.accommodation}</span>
+                            <span className="text-sm font-medium text-gray-900 tracking-wide">Accommodation: </span>
+                            <span className="text-sm text-gray-500  tracking-wide">{day.accommodation}</span>
                           </div>
                         )}
                         {day.meals && (
                           <div className="mb-2">
-                            <span className="text-sm font-luxury font-medium text-luxury-black tracking-wide">Meals: </span>
-                            <span className="text-sm text-luxury-black/70 font-luxury tracking-wide">{day.meals}</span>
+                            <span className="text-sm font-medium text-gray-900 tracking-wide">Meals: </span>
+                            <span className="text-sm text-gray-500  tracking-wide">{day.meals}</span>
                           </div>
                         )}
                         {day.activities && day.activities.length > 0 && (
                           <ul className="mt-3 space-y-2">
                             {day.activities.map((activity, actIndex) => (
-                              <li key={actIndex} className="text-sm text-luxury-black/70 font-luxury tracking-wide flex items-center">
-                                <span className="w-1.5 h-1.5 bg-luxury-red rounded-full mr-2"></span>
+                              <li key={actIndex} className="text-sm text-gray-500  tracking-wide flex items-center">
+                                <span className="w-1.5 h-1.5 bg-red-600 rounded-full mr-2"></span>
                                 {activity}
                               </li>
                             ))}
@@ -256,14 +256,14 @@ export default function PackageDetail() {
 
               {/* Package Includes */}
               {packageData.packageIncludes && packageData.packageIncludes.length > 0 && (
-                <div className="bg-white p-6 rounded-xl shadow-md border border-luxury-black/10">
-                  <h2 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">
+                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                  <h2 className="text-2xl font-light text-gray-900 mb-4 tracking-tight">
                     Package Includes
                   </h2>
                   <ul className="space-y-2">
                     {packageData.packageIncludes.map((item, index) => (
-                      <li key={index} className="flex items-center space-x-2 text-luxury-black/70 font-luxury tracking-wide">
-                        <CheckCircle className="h-5 w-5 text-luxury-red" />
+                      <li key={index} className="flex items-center space-x-2 text-gray-500  tracking-wide">
+                        <CheckCircle className="h-5 w-5 text-red-600" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -274,26 +274,26 @@ export default function PackageDetail() {
 
             {/* Booking Form Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-luxury-black/10 sticky top-4">
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 sticky top-4">
                 {submitted ? (
                   <div className="text-center py-8">
-                    <CheckCircle className="h-16 w-16 text-luxury-red mx-auto mb-4" />
-                    <h3 className="text-xl font-luxury font-light text-luxury-black mb-2 tracking-luxury">
+                    <CheckCircle className="h-16 w-16 text-red-600 mx-auto mb-4" />
+                    <h3 className="text-xl font-light text-gray-900 mb-2 tracking-tight">
                       Inquiry Submitted!
                     </h3>
-                    <p className="text-luxury-black/70 mb-4 font-luxury tracking-wide text-sm">
+                    <p className="text-gray-500 mb-4  tracking-wide text-sm">
                       Our team will contact you shortly.
                     </p>
                     <button
                       onClick={() => setSubmitted(false)}
-                      className="text-luxury-red hover:text-luxury-red/80 font-luxury tracking-wide text-sm"
+                      className="text-red-600 hover:text-red-500  tracking-wide text-sm"
                     >
                       Submit Another
                     </button>
                   </div>
                 ) : (
                   <>
-                    <h2 className="text-2xl font-luxury font-light text-luxury-black mb-4 tracking-luxury">
+                    <h2 className="text-2xl font-light text-gray-900 mb-4 tracking-tight">
                       Book This Tour
                     </h2>
                     {formData.selectedPackage && (() => {
@@ -305,7 +305,7 @@ export default function PackageDetail() {
                         const currency = selectedOption.currency || packageData.currency || 'INR';
                         const currencySymbol = currency === 'INR' ? '₹' : currency === 'USD' ? '$' : currency;
                         return (
-                          <p className="text-luxury-red text-xl font-luxury font-light mb-6 tracking-luxury">
+                          <p className="text-red-600 text-xl font-light mb-6 tracking-tight">
                             @ {currencySymbol} {new Intl.NumberFormat('en-IN').format(price)}/- Seat
                           </p>
                         );
@@ -313,13 +313,13 @@ export default function PackageDetail() {
                       return null;
                     })()}
                     {!formData.selectedPackage && packageData.priceNote && (
-                      <p className="text-luxury-red text-lg font-luxury font-light mb-6 tracking-luxury">
+                      <p className="text-red-600 text-lg font-light mb-6 tracking-tight">
                         {packageData.priceNote}
                       </p>
                     )}
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                        <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                           Name *
                         </label>
                         <input
@@ -327,12 +327,12 @@ export default function PackageDetail() {
                           required
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                           placeholder="Your full name"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                        <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                           Email *
                         </label>
                         <input
@@ -340,12 +340,12 @@ export default function PackageDetail() {
                           required
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                           placeholder="your.email@example.com"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                        <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                           Phone *
                         </label>
                         <PhoneInput
@@ -360,13 +360,13 @@ export default function PackageDetail() {
                       {/* Package Type Dropdown */}
                       {packageData.packageTypes && packageData.packageTypes.length > 0 && (
                         <div>
-                          <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                          <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                             Select Package Type *
                           </label>
                           <select
                             value={formData.selectedPackageType}
                             onChange={(e) => setFormData({ ...formData, selectedPackageType: e.target.value })}
-                            className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                             required
                           >
                             <option value="">Select Package Type</option>
@@ -380,7 +380,7 @@ export default function PackageDetail() {
                       )}
                       {packageData.durationOptions && packageData.durationOptions.length > 0 && (
                         <div>
-                          <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                          <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                             Select Package *
                           </label>
                           <select
@@ -388,7 +388,7 @@ export default function PackageDetail() {
                             onChange={(e) => {
                               setFormData({ ...formData, selectedPackage: e.target.value, selectedDate: '' });
                             }}
-                            className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                             required
                           >
                             <option value="">Select Package</option>
@@ -409,7 +409,7 @@ export default function PackageDetail() {
                         </div>
                       )}
                       <div>
-                        <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                        <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                           Select Date *
                         </label>
                         {formData.selectedPackage ? (() => {
@@ -423,7 +423,7 @@ export default function PackageDetail() {
                               <select
                                 value={formData.selectedDate}
                                 onChange={(e) => setFormData({ ...formData, selectedDate: e.target.value })}
-                                className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                                 required
                               >
                                 <option value="">Select Date</option>
@@ -445,7 +445,7 @@ export default function PackageDetail() {
                               type="date"
                               value={formData.selectedDate}
                               onChange={(e) => setFormData({ ...formData, selectedDate: e.target.value })}
-                              className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                               min={new Date().toISOString().split('T')[0]}
                               required
                             />
@@ -455,7 +455,7 @@ export default function PackageDetail() {
                             type="date"
                             value={formData.selectedDate}
                             onChange={(e) => setFormData({ ...formData, selectedDate: e.target.value })}
-                            className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide"
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide"
                             min={new Date().toISOString().split('T')[0]}
                             disabled
                             placeholder="Select package first"
@@ -463,21 +463,21 @@ export default function PackageDetail() {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-luxury font-medium text-luxury-black mb-2 tracking-wide">
+                        <label className="block text-sm font-medium text-gray-900 mb-2 tracking-wide">
                           Message (Optional)
                         </label>
                         <textarea
                           rows={4}
                           value={formData.message}
                           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                          className="w-full px-4 py-3 border border-luxury-black/20 rounded-lg focus:border-luxury-red focus:outline-none font-luxury tracking-wide resize-none"
+                          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-red-600 focus:outline-none  tracking-wide resize-none"
                           placeholder="Any special requirements..."
                         ></textarea>
                       </div>
                       <button
                         type="submit"
                         disabled={formLoading}
-                        className="w-full bg-luxury-red text-white py-4 rounded-xl hover:bg-luxury-red/90 transition font-luxury tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
+                        className="w-full bg-red-600 text-white py-4 rounded-xl hover:bg-red-700 transition  tracking-widest uppercase shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50"
                       >
                         {formLoading ? (
                           <span>Submitting...</span>
@@ -489,21 +489,21 @@ export default function PackageDetail() {
                         )}
                       </button>
                     </form>
-                    <div className="mt-6 pt-6 border-t border-luxury-black/10">
-                      <p className="text-xs text-luxury-black/60 font-luxury tracking-wide text-center mb-3">
+                    <div className="mt-6 pt-6 border-t border-gray-100">
+                      <p className="text-xs text-gray-400  tracking-wide text-center mb-3">
                         Or contact us directly:
                       </p>
                       <div className="flex flex-col space-y-2">
                         <a
                           href="tel:+911234567890"
-                          className="flex items-center justify-center space-x-2 text-sm text-luxury-black/70 hover:text-luxury-red transition font-luxury tracking-wide"
+                          className="flex items-center justify-center space-x-2 text-sm text-gray-500 hover:text-red-600 transition  tracking-wide"
                         >
                           <Phone className="h-4 w-4" />
                           <span>+91 123 456 7890</span>
                         </a>
                         <a
                           href="mailto:info@skyriting.com"
-                          className="flex items-center justify-center space-x-2 text-sm text-luxury-black/70 hover:text-luxury-red transition font-luxury tracking-wide"
+                          className="flex items-center justify-center space-x-2 text-sm text-gray-500 hover:text-red-600 transition  tracking-wide"
                         >
                           <Mail className="h-4 w-4" />
                           <span>info@skyriting.com</span>

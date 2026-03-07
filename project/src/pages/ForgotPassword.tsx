@@ -32,12 +32,9 @@ export default function ForgotPassword() {
       </div>
 
       <div className="max-w-md w-full relative z-10">
-        {/* Logo */}
+        {/* Header */}
         <div className="text-center mb-8">
-          <Link to="/" className="inline-block">
-            <img src="/images/her_o.png" alt="Skyriting" className="h-12 object-contain filter brightness-0 invert opacity-90 mx-auto" />
-          </Link>
-          <h1 className="text-2xl sm:text-3xl font-light text-white tracking-widest uppercase mt-4 mb-2">
+          <h1 className="text-2xl sm:text-3xl font-light text-white tracking-widest uppercase mb-2">
             Reset Password
           </h1>
           <p className="text-white/50 text-sm tracking-wide">
