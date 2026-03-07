@@ -252,17 +252,17 @@ export default function SearchWidget() {
         message="Thank you for your interest. Our team will contact you shortly to confirm your charter details."
       />
       {/* Aircraft Type Selector */}
-      <div className="flex mb-3">
+      <div className="flex flex-col sm:flex-row mb-3 gap-2">
         {(['jet', 'helicopter'] as const).map(type => (
           <button
             key={type}
             type="button"
             onClick={() => setAircraftType(type)}
-            className={`flex items-center gap-2 px-5 py-2.5 text-xs font-semibold tracking-widest uppercase transition-all duration-200 ${
+            className={`flex items-center justify-center gap-2 px-5 py-3 text-xs font-semibold tracking-widest uppercase transition-all duration-200 ${
               aircraftType === type
                 ? 'bg-red-600 text-white shadow-lg shadow-red-600/30'
                 : 'bg-white/15 text-white/80 hover:bg-white/25 hover:text-white'
-            } ${type === 'jet' ? 'rounded-l-xl' : 'rounded-r-xl'}`}
+            } rounded-xl`}
           >
             <Plane className={`h-3.5 w-3.5 ${type === 'helicopter' ? 'rotate-45' : ''}`} />
             {type === 'jet' ? 'Private Jet' : 'Helicopter'}

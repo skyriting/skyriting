@@ -123,7 +123,7 @@ export default function Fleet() {
           </div>
 
           {/* Category Filters */}
-          <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+          <div className="grid grid-cols-2 ms:grid-cols-3 md:flex md:flex-wrap gap-2 sm:gap-3 justify-center">
             {categories.map((category) => (
               <button
                 key={category}
@@ -135,7 +135,7 @@ export default function Fleet() {
                     setSearchParams({ type: category });
                   }
                 }}
-                className={`px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-lg font-luxury tracking-wide transition text-xs sm:text-sm md:text-base ${
+                className={`px-3 py-2 rounded-lg font-luxury tracking-wide transition text-xs sm:text-sm ${
                   selectedCategory === category
                     ? 'bg-luxury-red text-white shadow-lg'
                     : 'bg-luxury-white-off text-luxury-black hover:bg-luxury-white-cream border border-luxury-black/20'
@@ -255,7 +255,7 @@ export default function Fleet() {
                             <Users className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-red mx-auto mb-1" />
                             <p className="text-xs text-luxury-black/70 font-luxury mb-0.5">Flight Attendant</p>
                             <p className="text-sm sm:text-base font-luxury font-light text-luxury-black">
-                              {specs.flightAttendant ? 'Yes' : 'No'}
+                             {specs.flightAttendant ? 'Yes' : 'No'}
                             </p>
                           </div>
                         </div>

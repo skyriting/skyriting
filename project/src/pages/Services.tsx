@@ -89,17 +89,15 @@ export default function Services() {
                     className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-luxury-black/10 group flex flex-col"
                   >
                     <div className="relative h-56 bg-luxury-black/5 overflow-hidden">
-                      {service.imageUrl ? (
-                        <img
-                          src={service.imageUrl}
-                          alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                          <IconComponent className="h-16 w-16 text-luxury-black/10" />
-                        </div>
-                      )}
+                      <img
+                        src={[
+                          '/images/heli1.jpg',
+                          '/images/place-flying-sunset-sky.jpg',
+                          '/images/private-airplanes-field.jpg'
+                        ][services.indexOf(service) % 3]}
+                        alt={service.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                     <div className="p-8 flex-1 flex flex-col">

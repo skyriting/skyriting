@@ -39,13 +39,13 @@ const FEATURES = [
 ];
 
 const AIRCRAFT_TYPES = [
-  { type: 'Helicopter', img: 'https://images.unsplash.com/photo-1544376798-89aa6b82c6cd?w=600&h=400&fit=crop&q=80', link: '/helicopter' },
+  { type: 'Helicopter', img: '/images/heli1.jpg', link: '/helicopter' },
   { type: 'Airliner', img: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Airliner' },
   { type: 'Large Jet', img: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Large' },
-  { type: 'Super Mid', img: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Super Mid' },
+  { type: 'Super Mid', img: '/images/place-flying-sunset-sky.jpg', link: '/fleet?type=Super Mid' },
   { type: 'Midsize', img: 'https://images.unsplash.com/photo-1556388158-158ea5ccacbd?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Mid' },
   { type: 'Light Jet', img: 'https://images.unsplash.com/photo-1569629743817-70d8db6c323b?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Light' },
-  { type: 'Turboprop', img: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop&q=80', link: '/fleet?type=Turboprop' },
+  { type: 'Turboprop', img: '/images/private-airplanes-field.jpg', link: '/fleet?type=Turboprop' },
 ];
 
 export default function Home() {
