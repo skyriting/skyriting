@@ -14,7 +14,7 @@ const mobilityThreadPostSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   userName: { type: String, required: true },
   userPhoto: { type: String }, // Base64 image
-  content: { type: String, required: true },
+  content: { type: String, default: '' },
   images: [{ type: String }], // Array of base64 images
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   comments: [commentSchema],

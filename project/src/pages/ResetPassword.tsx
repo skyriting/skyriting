@@ -1,24 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Lock, CheckCircle, XCircle, ArrowLeft } from 'lucide-react';
+import { Lock, CheckCircle, XCircle, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { resetPassword } from '../lib/api';
 
 export default function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    password: '',
-    confirmPassword: '',
-  });
+  const [formData, setFormData] = useState({ password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-
-  useEffect(() => {
-    if (!token) {
-      setError('Invalid reset token');
-    }
-  }, [token]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,25 +21,20 @@ export default function ResetPassword() {
       setError('Password must be at least 6 characters');
       return;
     }
-
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
     if (!token) {
-      setError('Invalid reset token');
+      setError('Invalid or missing reset token');
       return;
     }
 
     setLoading(true);
-
     try {
       await resetPassword(token, formData.password);
       setSuccess(true);
-      setTimeout(() => {
-        navigate('/login');
-      }, 3000);
+      setTimeout(() => navigate('/login'), 3000);
     } catch (err: any) {
       setError(err.message || 'Failed to reset password. The link may have expired.');
     } finally {
@@ -54,115 +42,149 @@ export default function ResetPassword() {
     }
   };
 
-  if (success) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-luxury-white to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div className="bg-white p-6 rounded-lg shadow-lg border border-luxury-black/10 text-center">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-luxury font-light text-luxury-black mb-2 tracking-luxury">
-              Password Reset Successful
-            </h2>
-            <p className="text-luxury-black/70 mb-4 font-luxury tracking-wide">
-              Your password has been reset successfully. You will be redirected to the login page shortly.
-            </p>
-            <Link
-              to="/login"
-              className="inline-flex items-center space-x-2 text-luxury-red hover:text-luxury-red/80 font-luxury tracking-wide"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Go to Login</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-luxury-white to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-luxury font-light text-luxury-black tracking-luxury">
-            Reset Password
-          </h2>
-          <p className="mt-2 text-center text-sm text-luxury-black/70 font-luxury tracking-wide">
-            Enter your new password below.
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-red-800/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-md w-full relative z-10">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link to="/">
+            <img src="/images/her_o.png" alt="Skyriting" className="h-12 object-contain filter brightness-0 invert opacity-90 mx-auto" />
+          </Link>
+          <h1 className="text-2xl sm:text-3xl font-light text-white tracking-widest uppercase mt-4 mb-2">
+            New Password
+          </h1>
+          <p className="text-white/50 text-sm tracking-wide">
+            Create a secure new password for your account
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded flex items-center space-x-2">
-              <XCircle className="h-5 w-5" />
-              <span>{error}</span>
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl">
+          {success ? (
+            <div className="text-center">
+              <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="h-10 w-10 text-green-400" />
+              </div>
+              <h2 className="text-2xl font-light text-white tracking-wide mb-3">Password Updated!</h2>
+              <p className="text-white/60 text-sm mb-8">Your password has been reset successfully. Redirecting to login...</p>
+              <div className="h-1 bg-white/5 rounded-full mb-4">
+                <div className="h-1 bg-green-500 rounded-full animate-pulse w-3/5"></div>
+              </div>
+              <Link to="/login" className="inline-flex items-center gap-2 text-white/50 hover:text-white/80 text-sm transition">
+                <ArrowLeft className="h-4 w-4" />
+                Go to Login
+              </Link>
             </div>
+          ) : (
+            <>
+              {!token && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center gap-3">
+                  <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+                  <p className="text-red-300 text-sm">Invalid or missing reset token. Please request a new password reset.</p>
+                </div>
+              )}
+
+              {error && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+                  <p className="text-red-300 text-sm">{error}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-xs font-medium text-white/60 tracking-widest uppercase mb-2">
+                    New Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      autoComplete="new-password"
+                      required
+                      minLength={6}
+                      value={formData.password}
+                      onChange={e => setFormData({ ...formData, password: e.target.value })}
+                      className="w-full pl-11 pr-12 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-red-500/50 focus:bg-white/10 transition text-sm"
+                      placeholder="Min 6 characters"
+                    />
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition">
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                  
+                  {/* Password strength indicator */}
+                  {formData.password && (
+                    <div className="mt-2 flex gap-1">
+                      {[...Array(4)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`h-1 flex-1 rounded-full transition-colors ${
+                            formData.password.length >= (i + 1) * 2.5
+                              ? formData.password.length >= 10 ? 'bg-green-500' : formData.password.length >= 6 ? 'bg-amber-500' : 'bg-red-500'
+                              : 'bg-white/10'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-white/60 tracking-widest uppercase mb-2">
+                    Confirm Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      autoComplete="new-password"
+                      required
+                      value={formData.confirmPassword}
+                      onChange={e => setFormData({ ...formData, confirmPassword: e.target.value })}
+                      className={`w-full pl-11 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-white/20 focus:outline-none transition text-sm ${
+                        formData.confirmPassword && formData.password !== formData.confirmPassword
+                          ? 'border-red-500/50'
+                          : 'border-white/10 focus:border-red-500/50'
+                      }`}
+                      placeholder="Repeat new password"
+                    />
+                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition">
+                      {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                  {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                    <p className="mt-1 text-xs text-red-400">Passwords do not match</p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading || !token}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 px-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-medium tracking-widest uppercase text-sm rounded-xl transition-all duration-200 shadow-lg shadow-red-900/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loading ? (
+                    <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <Lock className="h-4 w-4" />
+                  )}
+                  {loading ? 'Resetting...' : 'Reset Password'}
+                </button>
+              </form>
+
+              <div className="mt-6 text-center">
+                <Link to="/login" className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 text-sm transition">
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Login
+                </Link>
+              </div>
+            </>
           )}
-
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="password" className="block text-sm font-luxury font-medium text-luxury-black tracking-wide">
-                New Password
-              </label>
-              <div className="mt-1 relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-luxury-black/40" />
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-luxury-black/20 rounded-lg placeholder-luxury-black/40 focus:outline-none focus:ring-luxury-red focus:border-luxury-red font-luxury tracking-wide"
-                  placeholder="Enter new password (min 6 characters)"
-                  minLength={6}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-luxury font-medium text-luxury-black tracking-wide">
-                Confirm Password
-              </label>
-              <div className="mt-1 relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-luxury-black/40" />
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-luxury-black/20 rounded-lg placeholder-luxury-black/40 focus:outline-none focus:ring-luxury-red focus:border-luxury-red font-luxury tracking-wide"
-                  placeholder="Confirm new password"
-                  minLength={6}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={loading || !token}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-luxury tracking-widest uppercase rounded-xl text-white bg-luxury-red hover:bg-luxury-red/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-luxury-red disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Resetting Password...' : 'Reset Password'}
-            </button>
-          </div>
-
-          <div className="text-center">
-            <Link
-              to="/login"
-              className="inline-flex items-center space-x-2 text-sm text-luxury-black/70 hover:text-luxury-red font-luxury tracking-wide"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              <span>Back to Login</span>
-            </Link>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
